@@ -10,7 +10,7 @@ const Loading = () => {
             style={{ color: Colors.ACCENT, fontSize: 38 }}
           />
         </div>
-        <h1 className="font-primary text-2xl">Adding product...</h1>
+        <h1 className="font-primary text-2xl">Adding product....</h1>
       </div>
     </div>
   );
