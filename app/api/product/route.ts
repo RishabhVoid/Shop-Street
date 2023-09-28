@@ -6,8 +6,6 @@ import Product from "@/models/Product";
 import { StoreType, UserType } from "@/types";
 import { NextRequest } from "next/server";
 
-export const GET = async (request: NextRequest) => {};
-
 export const POST = async (request: NextRequest) => {
   const {
     title,
