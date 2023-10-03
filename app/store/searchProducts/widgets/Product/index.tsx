@@ -41,7 +41,7 @@ const Product = ({ product }: Props) => {
           onClick={nextImage}
         >
           <button className="bg-accent w-[35px] h-[35px] flex items-center justify-center rounded-full outline-none">
-            <AiFillCaretLeft />
+            <AiFillCaretLeft style={{ color: "white" }} />
           </button>
         </div>
         <div
@@ -49,7 +49,7 @@ const Product = ({ product }: Props) => {
           onClick={prevImage}
         >
           <button className="bg-accent w-[35px] h-[35px] flex items-center justify-center rounded-full outline-none">
-            <AiFillCaretRight />
+            <AiFillCaretRight style={{ color: "white" }} />
           </button>
         </div>
         <img
