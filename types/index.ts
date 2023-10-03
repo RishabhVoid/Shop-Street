@@ -75,3 +75,16 @@ export interface CustomButtonType {
   callback?: () => void;
   type?: "button" | "submit";
 }
+
+export interface SearchFilters {
+  pageNo: number;
+  searchQuery: string;
+  priceMin: number;
+  priceMax: number;
+  categories: string[];
+  priceHighToLow: boolean;
+  ratingHighToLow: boolean;
+  inventoryHighToLow: boolean;
+  distanceHighToLow: boolean;
+  daysHighToLow: boolean;
+}

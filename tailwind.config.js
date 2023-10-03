@@ -22,6 +22,12 @@ module.exports = {
       backgroundColor: {
         accent: "#ff8a16",
       },
+      outlineColor: {
+        accent: "#ff8a16",
+      },
+      borderColor: {
+        accent: "#ff8a16",
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",

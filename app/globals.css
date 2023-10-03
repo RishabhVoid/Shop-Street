@@ -5,6 +5,7 @@
 
 .custom_scroll {
   padding-right: 1rem;
+  padding-left: 1rem;
 }
 
 .custom_scroll::-webkit-scrollbar {

@@ -36,3 +36,7 @@ export const Categories = [
 ];
 
 export const ProductViewProfiles = ["main", "left", "right", "top"];
+
+export const MinPrices = [0, 100, 500, 1000, 2000, 5000];
+
+export const MaxPrices = [500, 1000, 2000, 5000, 10000, 100000];
