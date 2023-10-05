@@ -104,6 +104,7 @@ const AddProduct = () => {
     if (!uploadedFiles) return;
 
     const listOfAcceptedFiles: File[] = [];
+    let overSizeFiles = 0;
 
     for (let i = 0; i < uploadedFiles.length; i++) {
       const currentFile = uploadedFiles[i];
@@ -113,8 +114,17 @@ const AddProduct = () => {
       ) {
         if (currentFile.size <= 800 * 1024) {
           listOfAcceptedFiles.push(currentFile);
+        } else {
+          overSizeFiles = overSizeFiles + 1;
         }
       }
+    }
+
+    if (overSizeFiles > 0) {
+      toast({
+        title: `${overSizeFiles} files couldn't be uploaded! due to large size!`,
+        description: "You can only upload files which are under 800KB.",
+      });
     }
 
     setFiles((files) => {
