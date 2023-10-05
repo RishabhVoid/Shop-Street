@@ -158,9 +158,19 @@ export const POST = async (request: NextRequest) => {
 };
 
 export const DELETE = async (request: NextRequest) => {
-  const { productId } = await request.json();
+  const { productId, userEmail } = await request.json();
   try {
     const product = await Product.deleteOne({ _id: productId });
+    const user: UserType | null = await User.findOne({ email: userEmail });
+    if (user) {
+      const shop = await Store.findOne({ _id: user.storeId });
+      shop.productIds = shop.productIds.filter(
+        (id: string) => id !== productId
+      );
+      await shop.save();
+    } else {
+      throw new Error("Seller not found");
+    }
 
     return new Response(
       JSON.stringify({

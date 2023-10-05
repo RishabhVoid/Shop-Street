@@ -3,20 +3,25 @@
 import CustomButton from "@/components/CustomButton";
 import { useToast } from "@/components/ui/use-toast";
 import { ResponseCodes } from "@/constants";
+import { auth } from "@/firebaseConfig";
 import { useRouter } from "next/navigation";
+import { useAuthState } from "react-firebase-hooks/auth";
 
 interface Props {
   productId: string;
 }
 
 const DeleteProductButton = ({ productId }: Props) => {
+  const [user, loading] = useAuthState(auth);
+
   const router = useRouter();
   const { toast } = useToast();
 
   const deleteProduct = async () => {
+    if (loading) return;
     const rawRes = await fetch("/api/product", {
       method: "DELETE",
-      body: JSON.stringify({ productId }),
+      body: JSON.stringify({ productId, userEmail: user?.email || "" }),
     });
     const jsonRes = await rawRes.json();
     if (jsonRes.status === ResponseCodes.SUCCESS) {

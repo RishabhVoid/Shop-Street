@@ -9,6 +9,8 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "@/firebaseConfig";
 import { useToast } from "@/components/ui/use-toast";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
+import { AiFillCaretLeft } from "react-icons/ai";
+import { AiFillCaretRight } from "react-icons/ai";
 import Product from "@/components/Product";
 import sortProducts from "@/lib/sortProducts";
 
@@ -99,6 +101,15 @@ const SearchProducts = () => {
     setAreProductsLoaded(true);
   };
 
+  const nextPage = () => {
+    setFilters((filters) => ({ ...filters, pageNo: filters.pageNo + 1 }));
+  };
+
+  const prevPage = () => {
+    if (filters.pageNo <= 1) return;
+    setFilters((filters) => ({ ...filters, pageNo: filters.pageNo - 1 }));
+  };
+
   useEffect(() => {
     if (loading || !user || !user.email) return;
     setAreProductsLoaded(false);
@@ -149,6 +160,23 @@ const SearchProducts = () => {
                   <h1 className="font-primary text-2xl">No data found</h1>
                 </div>
               )}
+              <div className="w-[90%] mx-auto h-[4rem] mt-4 flex items-center justify-center">
+                <button
+                  onClick={prevPage}
+                  className="bg-accent p-4 rounded-full"
+                >
+                  <AiFillCaretLeft style={{ color: "white" }} />
+                </button>
+                <h1 className="font-primary mx-4">Page : {filters.pageNo}</h1>
+                {filteredProducts.length !== 0 && (
+                  <button
+                    onClick={nextPage}
+                    className="bg-accent p-4 rounded-full"
+                  >
+                    <AiFillCaretRight style={{ color: "white" }} />
+                  </button>
+                )}
+              </div>
             </div>
           ) : (
             <div className="flex-1 flex items-center justify-center">
