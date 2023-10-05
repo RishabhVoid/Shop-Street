@@ -3,17 +3,19 @@
 import SearchBar from "./SearchBar";
 import PriceRangeSelector from "./PriceRangeSelector";
 import CategoryChooser from "./CategoryChooser";
-import RatingSorter from "./RatingSorter";
-import InventorySorter from "./InventorySorter";
-import DeliveryDistanceSorter from "./DeliveryDistanceSorter";
-import DeliveryDaySorter from "./DeliveryDaySorter";
-import PriceSorter from "./PriceSorter";
-import updateSearchParams from "@/lib/updateSearchParams";
 import { SheetClose, SheetContent } from "@/components/ui/sheet";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
-import { SearchFilters } from "@/types";
+import { SearchFilters, SortBy } from "@/types";
 import { MaxPrices, MinPrices } from "@/constants";
+import { MdFilterList } from "react-icons/md";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 interface Props {
   isClientComponent: boolean;
@@ -32,11 +34,16 @@ const ProductSortDrawer = ({
     max: 100_000,
   });
   const [categories, setCategories] = useState<string[]>([]);
-  const [priceHighToLow, setPriceHighToLow] = useState(true);
-  const [ratingHighToLow, setRatingHighToLow] = useState(true);
-  const [inventoryHighToLow, setInventoryHighToLow] = useState(true);
-  const [distanceHighToLow, setDistanceHighToLow] = useState(true);
-  const [daysHighToLow, setDaysHighToLow] = useState(true);
+  const [sortBy, setSortBy] = useState<SortBy>("price");
+  const [highToLow, setHighToLow] = useState(true);
+
+  const sortOptions = [
+    "price",
+    "rating",
+    "inventory size",
+    "delivery distance",
+    "delivery time",
+  ];
 
   const router = useRouter();
 
@@ -50,41 +57,38 @@ const ProductSortDrawer = ({
         priceMax: maxPrice,
         searchQuery: searchTerm,
         categories: categories,
-        priceHighToLow: priceHighToLow,
-        ratingHighToLow: ratingHighToLow,
-        inventoryHighToLow: inventoryHighToLow,
-        distanceHighToLow: distanceHighToLow,
-        daysHighToLow: daysHighToLow,
+        order: highToLow ? "high-to-low" : "low-to-high",
+        sortBy: sortBy,
       }));
       return;
     }
-    const searchUrl = updateSearchParams(
-      [
-        "query",
-        "minPrice",
-        "maxPrice",
-        "categories",
-        "priceHighToLow",
-        "ratingHighToLow",
-        "inventoryHighToLow",
-        "distanceHighToLow",
-        "daysHighToLow",
-      ],
-      [
-        searchTerm,
-        String(minPrice),
-        String(maxPrice),
-        categories.join("%20"),
-        String(priceHighToLow),
-        String(ratingHighToLow),
-        String(inventoryHighToLow),
-        String(distanceHighToLow),
-        String(daysHighToLow),
-      ]
-    );
-    router.replace(searchUrl, {
-      scroll: false,
-    });
+    // const searchUrl = updateSearchParams(
+    //   [
+    //     "query",
+    //     "minPrice",
+    //     "maxPrice",
+    //     "categories",
+    //     "priceHighToLow",
+    //     "ratingHighToLow",
+    //     "inventoryHighToLow",
+    //     "distanceHighToLow",
+    //     "daysHighToLow",
+    //   ],
+    //   [
+    //     searchTerm,
+    //     String(minPrice),
+    //     String(maxPrice),
+    //     categories.join("%20"),
+    //     String(priceHighToLow),
+    //     String(ratingHighToLow),
+    //     String(inventoryHighToLow),
+    //     String(distanceHighToLow),
+    //     String(daysHighToLow),
+    //   ]
+    // );
+    // router.replace(searchUrl, {
+    //   scroll: false,
+    // });
   };
 
   const clearFilters = () => {
@@ -95,12 +99,17 @@ const ProductSortDrawer = ({
         priceMin: MinPrices[0],
         priceMax: MaxPrices.reverse()[0],
         categories: [],
-        priceHighToLow: true,
-        ratingHighToLow: true,
-        daysHighToLow: false,
-        distanceHighToLow: false,
-        inventoryHighToLow: true,
+        order: "high-to-low",
+        sortBy: "price",
       }));
+      setSearchTerm("");
+      setPriceRange({
+        min: 0,
+        max: 100_000,
+      });
+      setCategories([]);
+      setSortBy("price");
+      setHighToLow(true);
       return;
     }
     router.replace(`/store/searchProducts?page=${pageNo}`);
@@ -118,27 +127,44 @@ const ProductSortDrawer = ({
           categories={categories}
           setCategories={setCategories}
         />
-        <PriceSorter
-          highToLow={priceHighToLow}
-          setHighToLow={setPriceHighToLow}
-        />
-        <RatingSorter
-          highToLow={ratingHighToLow}
-          setHighToLow={setRatingHighToLow}
-        />
-        <InventorySorter
-          highToLow={inventoryHighToLow}
-          setHighToLow={setInventoryHighToLow}
-        />
-        <DeliveryDistanceSorter
-          highToLow={distanceHighToLow}
-          setHighToLow={setDistanceHighToLow}
-        />
-        <DeliveryDaySorter
-          highToLow={daysHighToLow}
-          setHighToLow={setDaysHighToLow}
-        />
-        <div className="flex">
+        <div className="mb-2">
+          <Select
+            defaultValue={sortBy}
+            onValueChange={(value) => setSortBy(value as SortBy)}
+          >
+            <div className="flex justify-between">
+              <label htmlFor="Choose categories" className="font-primary">
+                Sort by
+              </label>
+              {highToLow ? <h1>High to low</h1> : <h1>Low to high</h1>}
+            </div>
+            <div className="flex items-center">
+              <SelectTrigger className="w-full bg-accent text-white rounded-[5px]">
+                <SelectValue placeholder="Sort by" className="capitalize" />
+              </SelectTrigger>
+              <SelectContent className="text-white bg-accent rounded-[5px]">
+                {sortOptions.map((option) => (
+                  <SelectItem
+                    key={option}
+                    className="capitalize"
+                    value={option}
+                  >
+                    {option}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+              <div
+                className={`bg-accent h-full p-2 ml-2 rounded-[5px] transition-transform duration-300 cursor-pointer ${
+                  highToLow ? "rotate-0" : "rotate-180"
+                }`}
+                onClick={() => setHighToLow(!highToLow)}
+              >
+                <MdFilterList style={{ color: "white", fontSize: 22 }} />
+              </div>
+            </div>
+          </Select>
+        </div>
+        <div className="flex mt-8">
           <SheetClose
             onClick={handleSubmit}
             className="bg-accent mr-4 text-white py-2 w-full text-center mt-4 rounded-[5px]"

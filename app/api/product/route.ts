@@ -78,7 +78,6 @@ export const GET = async (request: NextRequest) => {
       })
     );
   } catch (error) {
-    console.log("Get products error", error);
     return new Response(
       JSON.stringify({
         status: ResponseCodes.UNKNOWN_ERROR,
@@ -147,6 +146,27 @@ export const POST = async (request: NextRequest) => {
         },
       }),
       { status: 200 }
+    );
+  } catch {
+    return new Response(
+      JSON.stringify({
+        status: ResponseCodes.UNKNOWN_ERROR,
+      }),
+      { status: 500 }
+    );
+  }
+};
+
+export const DELETE = async (request: NextRequest) => {
+  const { productId } = await request.json();
+  try {
+    const product = await Product.deleteOne({ _id: productId });
+
+    return new Response(
+      JSON.stringify({
+        status: ResponseCodes.SUCCESS,
+      }),
+      { status: 201 }
     );
   } catch {
     return new Response(

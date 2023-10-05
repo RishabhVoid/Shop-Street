@@ -310,7 +310,7 @@ const AddProduct = () => {
   return (
     <div
       className={
-        "h-full relative flex flex-col items-center overflow-x-hidden overflow-y-auto md:flex-row md:w-full"
+        "h-full relative flex flex-col items-center overflow-x-hidden md:overflow-y-hidden overflow-y-auto md:flex-row md:w-full custom_scroll"
       }
     >
       {isDis && <Loading />}
@@ -362,10 +362,10 @@ const AddProduct = () => {
         </div>
       </div>
       <form
-        className="w-[95%] flex flex-col p-2 rounded-t-[5px] bg-white z-20 -mt-4 flex-1 md:flex-none md:w-[20rem] md:h-full"
+        className="w-[95%] flex flex-col p-2 md:p-0 rounded-t-[5px] bg-white z-20 -mt-4 flex-1 md:flex-none md:w-[20rem] md:h-full"
         onSubmit={handleSubmit}
       >
-        <div className="w-full flex flex-col md:overflow-y-auto md:h-full md:py-4 scrollbar custom_scroll">
+        <div className="w-full flex flex-col md:overflow-y-auto md:h-full md:py-4 custom_scroll">
           <div
             ref={logsRef}
             className="bg-red-400 rounded-[5px] px-2 text-white"

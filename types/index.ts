@@ -74,7 +74,17 @@ export interface CustomButtonType {
   styles?: string;
   callback?: () => void;
   type?: "button" | "submit";
+  icon?: string;
 }
+
+export type SortBy =
+  | "price"
+  | "rating"
+  | "inventory size"
+  | "delivery distance"
+  | "delivery time";
+
+export type Order = "low-to-high" | "high-to-low";
 
 export interface SearchFilters {
   pageNo: number;
@@ -82,9 +92,6 @@ export interface SearchFilters {
   priceMin: number;
   priceMax: number;
   categories: string[];
-  priceHighToLow: boolean;
-  ratingHighToLow: boolean;
-  inventoryHighToLow: boolean;
-  distanceHighToLow: boolean;
-  daysHighToLow: boolean;
+  sortBy: SortBy;
+  order: Order;
 }

@@ -4,8 +4,8 @@
 @tailwind utilities;
 
 .custom_scroll {
-  padding-right: 1rem;
-  padding-left: 1rem;
+  padding-right: 2.5px;
+  padding-left: 2.5px;
 }
 
 .custom_scroll::-webkit-scrollbar {
