@@ -248,8 +248,9 @@ const AddProduct = () => {
       setLogs(possibleLogs);
       if (window.innerWidth < 768) {
         pictureViewRef.current.scrollIntoView({ behavior: "smooth" });
+      } else {
+        logsRef.current.scrollIntoView({ behavior: "smooth" });
       }
-      logsRef.current.scrollIntoView({ behavior: "smooth" });
       setIsDis(false);
       setTimeout(() => {
         setLogs([]);
@@ -300,6 +301,7 @@ const AddProduct = () => {
   const goToNextImage = () =>
     setCurrentImage((imageIndex) => {
       if (!files.length) return 0;
+      if (files.length - 1 === imageIndex) return imageIndex;
       if (imageIndex === 3) {
         return 0;
       } else {
@@ -311,7 +313,7 @@ const AddProduct = () => {
     setCurrentImage((imageIndex) => {
       if (!files.length) return 0;
       if (imageIndex === 0) {
-        return 3;
+        return files.length - 1;
       } else {
         return imageIndex - 1;
       }
@@ -324,10 +326,11 @@ const AddProduct = () => {
       }
     >
       {isDis && <Loading />}
-      <div
-        ref={pictureViewRef}
-        className="w-full max-w-[20rem] relative z-10 md:max-w-none md:flex-1 md:mr-2"
-      >
+      <div ref={pictureViewRef} />
+      <div className="w-full max-w-[20rem] relative z-10 md:max-w-none md:flex-1 md:mr-2">
+        <span className="bg-accent w-[40px] h-[40px] absolute right-2 top-2 rounded-full flex items-center justify-center text-white">
+          {currentImage + 1}
+        </span>
         <div className="flex absolute top-2 left-2 items-center">
           <h2 className="bg-white md:bg-accent md:text-white p-2 rounded-full">
             {files.length}/4
@@ -358,7 +361,7 @@ const AddProduct = () => {
               ? "/images/no_product_uploads.png"
               : getFileUrl(files[currentImage])
           }
-          className="w-[320px] h-[320px] object-contain object-center md:w-full md:h-full md:max-h-[35rem]"
+          className="w-[320px] h-[320px] object-contain object-center pointer-events-none md:w-full md:h-full md:max-h-[35rem]"
           alt=""
         />
         <div className="absolute bottom-6 right-2 bg-accent rounded-full p-2">
@@ -376,10 +379,8 @@ const AddProduct = () => {
         onSubmit={handleSubmit}
       >
         <div className="w-full flex flex-col md:overflow-y-auto md:h-full md:py-4 custom_scroll">
-          <div
-            ref={logsRef}
-            className="bg-red-400 rounded-[5px] px-2 text-white"
-          >
+          <div ref={logsRef} className="mb-4" />
+          <div className="bg-red-400 rounded-[5px] px-2 text-white">
             {logs.map((log, index) => (
               <h2 key={index}>{log}</h2>
             ))}
@@ -534,7 +535,7 @@ const AddProduct = () => {
             </button>
             <button
               className="bg-red-500 mt-4 font-primary rounded-[5px] py-2 text-white"
-              onClick={() => handleReset}
+              onClick={() => handleReset()}
               type="button"
             >
               Reset form

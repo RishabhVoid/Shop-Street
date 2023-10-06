@@ -1,9 +1,7 @@
 import { Colors } from "@/constants";
 import { RiMoneyDollarCircleFill } from "react-icons/ri";
-import { AiTwotoneDelete } from "react-icons/ai";
 import getProductById from "@/lib/getProductById";
 import ProductImagePreview from "@/components/ProductImagePreview";
-import CustomButton from "@/components/CustomButton";
 import DeleteProductButton from "../widgets/DeleteProductButton";
 import Link from "next/link";
 
@@ -21,7 +19,7 @@ const ProductPage = async ({ params }: Props) => {
       <div className="md:w-1/2 w-full relative min-h-[70vh] md:h-[100vh] flex items-center justify-center">
         <ProductImagePreview productId={String(product._id)} />
       </div>
-      <div className="md:flex-1 flex flex-col p-4 bg-slate-100 md:h-full">
+      <div className="md:flex-1 flex flex-col p-4 bg-slate-100 md:h-full md:overflow-x-hidden md:overflow-y-auto overflow-y-visible custom_scroll">
         <div className="flex md:flex-col flex-col-reverse mb-2">
           <div className="flex flex-wrap gap-1 mx-4">
             {product.matchingCategories.map((category) => (
@@ -33,7 +31,7 @@ const ProductPage = async ({ params }: Props) => {
               </span>
             ))}
           </div>
-          <div className="md:mt-[20%] p-4">
+          <div className="md:mt-[10%] p-4">
             <h1 className="flex items-center text-2xl text-accent font-bold">
               {product.price}
               <div className="relative rotate-[180]">
@@ -72,7 +70,7 @@ const ProductPage = async ({ params }: Props) => {
             Go back
           </Link>
         </div>
-        <div className="mt-4 mx-4 flex flex-wrap gap-4 pointer-events-none opacity-30 md:mt-auto">
+        <div className="mt-4 mx-4 flex flex-wrap gap-4 pointer-events-none opacity-30 md:mt-8">
           <button className="bg-accent text-white px-4 py-2 rounded-full transition duration-200 hover:brightness-[1.1]">
             Buy Now
           </button>

@@ -43,13 +43,16 @@ export const GET = async (request: NextRequest) => {
 
     const products = store.productIds;
 
-    const searchRegExp = new RegExp(searchQuery || "", "i");
+    const searchTerms = searchQuery ? searchQuery.split(/\s+/) : [];
+    const searchRegex = searchTerms.map((term) => `(?=.*${term})`).join("");
+
+    const searchRegExp = new RegExp(searchRegex, "i");
 
     const productList = await Product.find({
       $and: [
         { _id: { $in: products } },
         {
-          $or: [{ title: searchRegExp }, { desc: searchRegExp }],
+          title: { $regex: searchRegExp },
         },
         { matchingCategories: { $in: categories } },
         { price: { $gte: priceMin, $lte: priceMax } },
@@ -74,6 +77,7 @@ export const GET = async (request: NextRequest) => {
         status: ResponseCodes.SUCCESS,
         data: {
           products: productList,
+          totalProducts: store.productIds.length,
         },
       })
     );

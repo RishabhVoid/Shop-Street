@@ -20,7 +20,7 @@ const Product = ({ product, inSellerView }: Props) => {
 
   if (loading)
     return (
-      <div className="w-[180px] h-[300px] max-h-max relative border border-slate-400">
+      <div className="w-[170px] md:w-[200px] h-[300px] max-h-max relative border border-slate-400">
         <Image
           src={altImage}
           fill
@@ -35,7 +35,7 @@ const Product = ({ product, inSellerView }: Props) => {
     );
 
   return (
-    <div className="w-[180px] h-[300px] max-h-max flex flex-col relative border border-slate-400">
+    <div className="w-[170px] md:w-[200px] h-[300px] max-h-max flex flex-col relative border border-slate-400">
       <div className="relative h-[40%]">
         <Image
           src={imageUrl!}
@@ -52,21 +52,11 @@ const Product = ({ product, inSellerView }: Props) => {
             <sup>$</sup>
             {product.price}
           </h1>
-          <h2 className="text-md relative text-ellipsis h-[75px] overflow-hidden">
-            <div className="absolute bottom-0 w-full h-[20%] bg-gradient-to-b from-[#ffffff27] to-[#fff]" />
+          <h2 className="text-sm md:text-base relative text-ellipsis h-[75px] overflow-hidden">
             {product.title}
           </h2>
-          <h2 className="text-white text-md hidden group-hover:block">
-            Inventory left : {product.inventory}
-          </h2>
-          <h2 className="text-white text-md hidden group-hover:block">
-            Area covered upto : {product.maxDistance} Km
-          </h2>
-          <h2 className="text-white text-md hidden group-hover:block">
-            Area covered in : {product.deliveryDays} days
-          </h2>
           <button
-            className="bg-accent transition duration-300 hover:bg-slate-300 p-2 mx-auto rounded-[5px] flex items-center mt-2 text-white"
+            className="bg-accent transition duration-300 hover:bg-slate-300 hover:text-black p-2 mx-auto rounded-[5px] flex items-center mt-2 text-white"
             onClick={() => {
               router.push(`/store/searchProducts/${product._id}`);
             }}
