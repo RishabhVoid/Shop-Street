@@ -64,7 +64,6 @@ const ProductPage = async ({ params }: Props) => {
           <DeleteProductButton productId={String(product._id)} />
           <Link
             href={"/store/searchProducts"}
-            replace
             className="ml-2 px-4 py-1 text-sm text-white rounded-[5px] bg-slate-700"
           >
             Go back

@@ -368,7 +368,7 @@ const AddProduct = () => {
           <BsFillCloudUploadFill style={{ fontSize: 28, color: "white" }} />
           <input
             type="file"
-            className="opacity-0 absolute top-0 left-0 w-full h-full z-50"
+            className="opacity-0 absolute top-0 left-0 w-full h-full z-50 outline-accent"
             multiple
             onChange={handleFilesUpload}
           />
@@ -396,7 +396,7 @@ const AddProduct = () => {
               type="text"
               id="title"
               ref={titleRef}
-              className="shadow-sm w-full mt-2 shadow-slate-600 text-[1rem] p-2 rounded-[5px]"
+              className="shadow-sm w-full mt-2 shadow-slate-600 text-[1rem] p-2 rounded-[5px] outline-accent"
               placeholder="Shadme mobile 3000..."
             />
           </div>
@@ -415,7 +415,7 @@ const AddProduct = () => {
                 type="number"
                 id="title"
                 ref={priceRef}
-                className="shadow-sm w-full shadow-slate-600 text-[1rem] p-2 rounded-[5px]"
+                className="shadow-sm w-full shadow-slate-600 text-[1rem] p-2 rounded-[5px] outline-accent"
                 placeholder="1200..."
               />
             </div>
@@ -468,7 +468,7 @@ const AddProduct = () => {
               type="number"
               id="title"
               ref={inventorySizeRef}
-              className="shadow-sm w-full mt-2 shadow-slate-600 text-[1rem] p-2 rounded-[5px]"
+              className="shadow-sm w-full mt-2 shadow-slate-600 text-[1rem] p-2 rounded-[5px] outline-accent"
               placeholder="10"
             />
           </div>
@@ -487,7 +487,7 @@ const AddProduct = () => {
                 type="number"
                 id="title"
                 ref={deliveryDistanceRef}
-                className="shadow-sm w-full shadow-slate-600 text-[1rem] p-2 rounded-[5px]"
+                className="shadow-sm w-full shadow-slate-600 text-[1rem] p-2 rounded-[5px] outline-accent"
                 placeholder="52..."
               />
             </div>
@@ -507,7 +507,7 @@ const AddProduct = () => {
                 type="number"
                 id="title"
                 ref={deliveryTimeRef}
-                className="shadow-sm w-full shadow-slate-600 text-[1rem] p-2 rounded-[5px]"
+                className="shadow-sm w-full shadow-slate-600 text-[1rem] p-2 rounded-[5px] outline-accent"
                 placeholder="5..."
               />
             </div>
@@ -522,7 +522,7 @@ const AddProduct = () => {
             <textarea
               id="title"
               ref={descRef}
-              className="shadow-sm w-full mt-2 h-[10rem] resize-none shadow-slate-600 text-[1rem] p-2 rounded-[5px]"
+              className="shadow-sm w-full mt-2 h-[10rem] resize-none shadow-slate-600 text-[1rem] p-2 rounded-[5px] outline-accent"
               placeholder="Best glossy chair..."
             />
           </div>
