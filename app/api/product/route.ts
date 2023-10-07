@@ -128,6 +128,7 @@ export const POST = async (request: NextRequest) => {
       title,
       desc,
       price,
+      sellerEmail,
       matchingCategories,
       inventory,
       maxDistance,

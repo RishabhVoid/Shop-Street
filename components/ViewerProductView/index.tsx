@@ -9,15 +9,16 @@ import Image from "next/image";
 
 interface Props {
   product: ProductType;
+  willBeHorizontle?: boolean;
 }
 
-const ViewerProductView = ({ product }: Props) => {
+const ViewerProductView = ({ product, willBeHorizontle = false }: Props) => {
   const [downloadUrl, loading] = useDownloadURL(
     ref(storage, `${product._id}-main`)
   );
 
   return (
-    <div className="absolute top-0 left-0 w-full overflow-hidden m-1 h-full flex flex-wrap border border-slate-300">
+    <div className="absolute top-0 left-0 w-full overflow-hidden h-full flex flex-wrap border border-slate-300">
       <div className="absolute top-0 left-0 w-full h-full z-10">
         {loading ? (
           <div className="w-full h-full p-1 flex flex-col justify-evenly">
@@ -30,7 +31,11 @@ const ViewerProductView = ({ product }: Props) => {
             <div className="relative w-full h-[60%]">
               <Image
                 src={downloadUrl!}
-                className="object-cover group-hover:object-contain object-center w-full h-full"
+                className={`${
+                  willBeHorizontle
+                    ? "object-contain"
+                    : "object-cover group-hover:object-contain"
+                } object-center w-full h-full`}
                 alt="product"
                 sizes="200px, 350px"
                 fill

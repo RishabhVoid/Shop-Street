@@ -7,7 +7,7 @@ import { SheetClose, SheetContent } from "@/components/ui/sheet";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { SearchFilters, SortBy } from "@/types";
-import { MaxPrices, MinPrices } from "@/constants";
+import { MaxPrices, MinPrices, sortOptions } from "@/constants";
 import { MdFilterList } from "react-icons/md";
 import {
   Select,
@@ -16,6 +16,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import updateSearchParams from "@/lib/updateSearchParams";
 
 interface Props {
   isClientComponent: boolean;
@@ -37,14 +38,6 @@ const ProductSortDrawer = ({
   const [sortBy, setSortBy] = useState<SortBy>("price");
   const [highToLow, setHighToLow] = useState(true);
 
-  const sortOptions = [
-    "price",
-    "rating",
-    "inventory size",
-    "delivery distance",
-    "delivery time",
-  ];
-
   const router = useRouter();
 
   const handleSubmit = () => {
@@ -62,33 +55,19 @@ const ProductSortDrawer = ({
       }));
       return;
     }
-    // const searchUrl = updateSearchParams(
-    //   [
-    //     "query",
-    //     "minPrice",
-    //     "maxPrice",
-    //     "categories",
-    //     "priceHighToLow",
-    //     "ratingHighToLow",
-    //     "inventoryHighToLow",
-    //     "distanceHighToLow",
-    //     "daysHighToLow",
-    //   ],
-    //   [
-    //     searchTerm,
-    //     String(minPrice),
-    //     String(maxPrice),
-    //     categories.join("%20"),
-    //     String(priceHighToLow),
-    //     String(ratingHighToLow),
-    //     String(inventoryHighToLow),
-    //     String(distanceHighToLow),
-    //     String(daysHighToLow),
-    //   ]
-    // );
-    // router.replace(searchUrl, {
-    //   scroll: false,
-    // });
+    const searchUrl = updateSearchParams(
+      ["minPrice", "maxPrice", "categories", "sortBy", "highToLow"],
+      [
+        String(minPrice),
+        String(maxPrice),
+        categories.join("_"),
+        sortBy,
+        String(highToLow),
+      ]
+    );
+    router.replace(searchUrl, {
+      scroll: false,
+    });
   };
 
   const clearFilters = () => {
@@ -112,13 +91,15 @@ const ProductSortDrawer = ({
       setHighToLow(true);
       return;
     }
-    router.replace(`/store/searchProducts?page=${pageNo}`);
+    router.replace(`/search?page=${pageNo}`);
   };
 
   return (
-    <SheetContent className="bg-white w-[90%] sm:w-[30rem] p-2">
+    <SheetContent className="bg-white w-[90%] sm:w-[30rem] p-2 h-full">
       <div className="h-full overflow-y-auto flex-col pt-4 custom_scroll">
-        <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+        {isClientComponent && (
+          <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+        )}
         <PriceRangeSelector
           priceRange={priceRange}
           setPriceRange={setPriceRange}

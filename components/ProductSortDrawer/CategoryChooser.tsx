@@ -29,7 +29,7 @@ const CategoryChooser = ({ categories, setCategories }: Props) => {
         Choose categories
       </label>
       <DropdownMenu>
-        <DropdownMenuTrigger className="font-primary align-left bg-accent text-white py-1 w-full rounded-[5px]">
+        <DropdownMenuTrigger className="font-primary outline-none align-left bg-accent text-white py-1 w-full rounded-[5px]">
           Choose category
         </DropdownMenuTrigger>
         <div className="flex flex-wrap items-center">

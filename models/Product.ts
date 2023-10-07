@@ -13,6 +13,10 @@ const productSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
+  sellerEmail: {
+    type: String,
+    required: true,
+  },
   matchingCategories: {
     type: [String],
     required: true,

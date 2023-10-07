@@ -35,13 +35,13 @@ const PriceRangeSelector = ({ priceRange, setPriceRange }: Props) => {
   };
 
   return (
-    <div className="mb-4">
+    <div className="mb-4 w-full">
       <label htmlFor="search_product" className="mb-1 font-primary">
         Pricing range MIN-MAX
       </label>
       <div className="w-full flex">
         <DropdownMenu>
-          <DropdownMenuTrigger className="bg-accent w-1/2 text-white py-1 mr-1 rounded-[5px]">
+          <DropdownMenuTrigger className="bg-accent w-1/2 text-white py-1 mr-1 rounded-[5px] outline-none">
             {priceRange.min === 0 ? "MIN" : priceRange.min}
           </DropdownMenuTrigger>
           <DropdownMenuContent className="bg-white rounded-[5px] overflow-y-scroll custom_scroll">
@@ -53,7 +53,7 @@ const PriceRangeSelector = ({ priceRange, setPriceRange }: Props) => {
           </DropdownMenuContent>
         </DropdownMenu>
         <DropdownMenu>
-          <DropdownMenuTrigger className="bg-accent w-1/2 text-white py-1 mr-1 rounded-[5px]">
+          <DropdownMenuTrigger className="bg-accent w-1/2 text-white py-1 mr-1 rounded-[5px] outline-none">
             {priceRange.max === 100_000 ? "Max" : priceRange.max}
           </DropdownMenuTrigger>
           <DropdownMenuContent className="bg-white rounded-[5px] overflow-y-scroll custom_scroll">

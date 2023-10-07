@@ -27,6 +27,12 @@
   background-color: white;
 }
 
+@media screen and (max-width: 768px) {
+  .no_pad_scroll::-webkit-scrollbar {
+    width: 0px;
+  }
+}
+
 .no_pad_scroll::-webkit-scrollbar-thumb {
   background-color: #ff8a16;
 }

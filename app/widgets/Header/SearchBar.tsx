@@ -1,12 +1,18 @@
 "use client";
 
 import { BsSearch } from "react-icons/bs";
-import { FormEvent } from "react";
+import { FormEvent, useState } from "react";
+import { useRouter } from "next/navigation";
 
 const SearchBar = () => {
+  const [query, setQuery] = useState("");
+
+  const router = useRouter();
+
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
-    alert("he");
+    if (!query.trim()) return;
+    router.push(`/search?pageNo=1&query=${query}`);
   };
 
   return (
@@ -18,10 +24,12 @@ const SearchBar = () => {
         type="text"
         placeholder="Full hd tv..."
         className="flex-1 h-full outline-none ml-4 mr-4"
+        value={query}
+        onChange={(event) => setQuery(event.target.value)}
       />
       <button
         type="submit"
-        className="p-3 pr-4 rounded-e-3lg h-full cursor-pointer hover:bg-slate-300 transition-all duration-200"
+        className="p-3 pr-4 rounded-e-3lg h-full cursor-pointer transition-all duration-200"
       >
         <BsSearch />
       </button>
