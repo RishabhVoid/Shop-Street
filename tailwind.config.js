@@ -28,6 +28,11 @@ module.exports = {
       borderColor: {
         accent: "#ff8a16",
       },
+      backgroundImage: {
+        "beast-image": "url('/specials/apple.jpg')",
+        "collectables-image": "url('/specials/collectables.jpg')",
+        "shoes-image": "url('/specials/shoes.jpg')",
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
