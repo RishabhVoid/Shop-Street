@@ -179,7 +179,7 @@ const AddProduct = () => {
     deliveryDays: string,
     sellerEmail: string
   ) => {
-    const rawRes = await fetch("/api/product", {
+    const rawRes = await fetch("/api/sellerShop", {
       method: "POST",
       body: JSON.stringify({
         title,

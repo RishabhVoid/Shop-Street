@@ -19,7 +19,7 @@ const StoreDashboard = () => {
   const router = useRouter();
 
   const getUser = async (email: string) => {
-    const rawRes = await fetch(`/api/user?email=${email}`);
+    const rawRes = await fetch(`/api/seller?email=${email}`);
     const jsonRes = await rawRes.json();
     if (jsonRes.status === ResponseCodes.INVALID_CREDENTIALS) {
       router.push("/", { scroll: false });

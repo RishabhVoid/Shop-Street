@@ -15,8 +15,8 @@ const CreateStore = () => {
   const [user] = useAuthState(auth);
 
   const createStore = async (storeName: string, userEmail: string) => {
-    const rawRes = await fetch("/api/user", {
-      method: "PATCH",
+    const rawRes = await fetch("/api/store", {
+      method: "POST",
       body: JSON.stringify({
         userEmail,
         storeName,

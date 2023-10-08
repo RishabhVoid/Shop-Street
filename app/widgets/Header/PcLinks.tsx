@@ -10,14 +10,22 @@ import {
 import { MdAttachMoney } from "react-icons/md";
 import { ImCart } from "react-icons/im";
 import { RiAccountCircleFill } from "react-icons/ri";
+import { MdOutlinePlaylistPlay } from "react-icons/md";
 import Link from "next/link";
 import { auth } from "@/firebaseConfig";
+import { useRouter } from "next/navigation";
 
 const PcLinks = () => {
   const [signInWithGoogle] = useSignInWithGoogle(auth);
   const [user, loading] = useAuthState(auth);
   const isLoading = loading;
   const isSignedIn = typeof user?.email === "string";
+
+  const router = useRouter();
+
+  const goToLink = (link: string) => {
+    router.push(link);
+  };
 
   if (isLoading)
     return (
@@ -47,7 +55,7 @@ const PcLinks = () => {
         <div className="flex items-center">
           <TooltipProvider>
             <Tooltip>
-              <TooltipTrigger>
+              <TooltipTrigger onClick={() => goToLink("/user/dashboard/cart")}>
                 <ImCart
                   style={{
                     color: "white",
@@ -59,6 +67,25 @@ const PcLinks = () => {
               </TooltipTrigger>
               <TooltipContent className="bg-white rounded-[5px]">
                 Cart
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger
+                onClick={() => goToLink("/user/dashboard/wishlist")}
+              >
+                <MdOutlinePlaylistPlay
+                  style={{
+                    color: "white",
+                    fontSize: 28,
+                    marginRight: "1rem",
+                    cursor: "pointer",
+                  }}
+                />
+              </TooltipTrigger>
+              <TooltipContent className="bg-white rounded-[5px]">
+                Wishlist
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>

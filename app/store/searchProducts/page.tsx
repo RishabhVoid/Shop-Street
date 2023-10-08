@@ -58,7 +58,7 @@ const SearchProducts = () => {
     sellerEmail: string
   ) => {
     const rawRes = await fetch(
-      `/api/product?pageNo=${pageNo}&searchQuery=${searchQuery}&categories=${categories.join(
+      `/api/sellerShop?pageNo=${pageNo}&searchQuery=${searchQuery}&categories=${categories.join(
         "_"
       )}&priceMin=${priceMin}&priceMax=${priceMax}&sellerEmail=${sellerEmail}`,
       {

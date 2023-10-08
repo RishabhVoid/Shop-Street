@@ -53,6 +53,7 @@ export const Specials = [
     image: "collectables",
     bgImage: "",
     color: "#BAB86C",
+    search: "premium watch",
   },
   {
     title: "Industry beasts for max productiveness.",
@@ -60,6 +61,7 @@ export const Specials = [
     image: "beast",
     bgImage: "apple.jpg",
     color: "#587894",
+    search: "macbook",
   },
   {
     title: "Step out in style with our exclusive shoe collection.",
@@ -68,5 +70,6 @@ export const Specials = [
     image: "shoes",
     bgImage: "",
     color: "#f4c506",
+    search: "sneakers",
   },
 ];

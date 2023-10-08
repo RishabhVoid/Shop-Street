@@ -6,6 +6,7 @@ import { ProductType } from "@/types";
 import { ref } from "firebase/storage";
 import { useDownloadURL } from "react-firebase-hooks/storage";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 interface Props {
   product: ProductType;
@@ -13,9 +14,15 @@ interface Props {
 }
 
 const ViewerProductView = ({ product, willBeHorizontle = false }: Props) => {
+  const router = useRouter();
+
   const [downloadUrl, loading] = useDownloadURL(
     ref(storage, `${product._id}-main`)
   );
+
+  const goToItem = () => {
+    router.push(`/search/${product._id}`);
+  };
 
   return (
     <div className="absolute top-0 left-0 w-full overflow-hidden h-full flex flex-wrap border border-slate-300">
@@ -27,7 +34,10 @@ const ViewerProductView = ({ product, willBeHorizontle = false }: Props) => {
             <Skeleton className="w-full h-[15%] bg-slate-300 rounded-[5px]" />
           </div>
         ) : (
-          <div className="relative w-full h-[100%] group flex flex-col cursor-pointer">
+          <div
+            className="relative w-full h-[100%] group flex flex-col cursor-pointer"
+            onClick={goToItem}
+          >
             <div className="relative w-full h-[60%]">
               <Image
                 src={downloadUrl!}

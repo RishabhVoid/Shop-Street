@@ -14,7 +14,9 @@ const getFrontPageProducts = async (): Promise<ProductType[]> => {
     throw new Error("No products found");
   }
 
-  return products;
+  const stringifiedProductData = JSON.stringify(products);
+
+  return JSON.parse(stringifiedProductData);
 };
 
 export default getFrontPageProducts;

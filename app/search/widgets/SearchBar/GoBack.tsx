@@ -7,12 +7,12 @@ const GoBack = () => {
   const router = useRouter();
 
   return (
-    <button
+    <div
       onClick={() => router.back()}
       className="bg-accent w-[60px] h-full flex md:hidden items-center justify-center"
     >
       <AiFillCaretLeft style={{ color: "white" }} />
-    </button>
+    </div>
   );
 };
 

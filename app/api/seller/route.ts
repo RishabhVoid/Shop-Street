@@ -36,15 +36,6 @@ export async function GET(request: NextRequest) {
     );
   }
 
-  if (!user.isSeller) {
-    return new Response(
-      JSON.stringify({
-        status: ResponseCodes.CONDITIONS_MISMATCHED,
-      }),
-      { status: 401 }
-    );
-  }
-
   return new Response(
     JSON.stringify({
       status: ResponseCodes.SUCCESS,

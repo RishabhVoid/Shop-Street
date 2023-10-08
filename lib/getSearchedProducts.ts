@@ -1,6 +1,6 @@
 import { Categories, MaxPrices, MinPrices } from "@/constants";
 import Product from "@/models/Product";
-import { ProductType, SortBy } from "@/types";
+import { ProductType } from "@/types";
 import connect from "./connect";
 
 const getSearchedProducts = async (
@@ -63,10 +63,12 @@ const getSearchedProducts = async (
       .exec();
   }
 
+  const stringifiedProductData = JSON.stringify(productList);
+
   if (highToLow === "true") {
-    return productList;
+    return JSON.parse(stringifiedProductData);
   } else {
-    return productList.reverse();
+    return JSON.parse(stringifiedProductData).reverse();
   }
 };
 

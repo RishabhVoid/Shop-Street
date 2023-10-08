@@ -6,8 +6,15 @@ import { Autoplay, Navigation, Pagination } from "swiper/modules";
 
 import { Specials as sp } from "@/constants";
 import CustomButton from "@/components/CustomButton";
+import { useRouter } from "next/navigation";
 
 const Specials = () => {
+  const router = useRouter();
+
+  const goToSearch = (query: string) => {
+    router.push(`/search?query=${query}&pageNo=1`);
+  };
+
   return (
     <Swiper
       slidesPerView={1}
@@ -48,6 +55,7 @@ const Specials = () => {
               <CustomButton
                 title="Check out"
                 styles="mt-4 lg:text-md md:text-sm text-xs hidden md:block px-4 py-2"
+                callback={() => goToSearch(slide.search)}
               />
             </div>
           </div>

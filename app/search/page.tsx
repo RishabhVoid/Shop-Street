@@ -2,7 +2,7 @@ import FilterBar from "./widgets/FilterBar";
 import SearchBar from "./widgets/SearchBar";
 import getSearchedProducts from "@/lib/getSearchedProducts";
 import ViewerProductView from "@/components/ViewerProductView";
-import { Colors, MaxPrices, MinPrices } from "@/constants";
+import { Categories, Colors, MaxPrices, MinPrices } from "@/constants";
 import { BsFillBoxSeamFill } from "react-icons/bs";
 import { FaFilter } from "react-icons/fa";
 import { Sheet, SheetTrigger } from "@/components/ui/sheet";

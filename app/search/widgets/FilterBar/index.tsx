@@ -62,7 +62,7 @@ const FilterBar = () => {
   };
 
   const handleGoBack = () => {
-    router.back();
+    router.replace("/");
   };
 
   return (
@@ -118,7 +118,7 @@ const FilterBar = () => {
           className="border-2 border-accent bg-white text-black py-2 w-full text-center mt-4 rounded-[5px]"
           onClick={clearFilters}
         >
-          Click filters
+          Clear filters
         </button>
       </div>
       <CustomButton
