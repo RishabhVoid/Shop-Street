@@ -5,7 +5,6 @@ import ViewerProductView from "@/components/ViewerProductView";
 import { Categories, Colors, MaxPrices, MinPrices } from "@/constants";
 import { BsFillBoxSeamFill } from "react-icons/bs";
 import { FaFilter } from "react-icons/fa";
-import { Sheet, SheetTrigger } from "@/components/ui/sheet";
 import Pagination from "./widgets/Pagination";
 import ProductSortDrawer from "@/components/ProductSortDrawer";
 
@@ -33,11 +32,8 @@ const Search = async ({ searchParams }: Props) => {
   );
 
   return (
-    <Sheet>
+    <>
       <div className="h-full relative w-full flex">
-        <SheetTrigger className="absolute block md:hidden bg-accent p-4 rounded-full bottom-2 left-2 z-50">
-          <FaFilter style={{ color: "white" }} />
-        </SheetTrigger>
         <FilterBar />
         <div className="flex-1 h-full flex flex-col">
           <SearchBar query={searchParams.query || ""} />
@@ -69,11 +65,7 @@ const Search = async ({ searchParams }: Props) => {
           </div>
         </div>
       </div>
-      <ProductSortDrawer
-        pageNo={searchParams.pageNo}
-        isClientComponent={false}
-      />
-    </Sheet>
+    </>
   );
 };
 

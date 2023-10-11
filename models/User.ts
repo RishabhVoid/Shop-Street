@@ -15,11 +15,17 @@ const userSchema = new mongoose.Schema({
     required: true,
     default: [],
   },
+  orders: {
+    type: [String],
+    required: true,
+    default: [],
+  },
   orderDetailOptions: {
     type: [
       {
         address: String,
         email: String,
+        phoneNo: Number,
       },
     ],
     required: true,

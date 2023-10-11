@@ -51,6 +51,7 @@ const StoreDashboard = () => {
 
   useEffect(() => {
     if (!seller?.storeId || !seller) return;
+    if(seller.storeId==="default") return;
     (async () => await getStore(seller.storeId))();
   }, [seller?.storeId]);
 

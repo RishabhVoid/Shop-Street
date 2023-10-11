@@ -30,7 +30,9 @@ const MobileProfileDropDown = () => {
 
   return (
     <div className="lg:hidden ml-auto mr-4 flex items-center">
-      <ImCart style={{ color: "white", fontSize: 24, marginRight: "1rem" }} />
+      <Link href="user/dashboard/cart">
+        <ImCart style={{ color: "white", fontSize: 24, marginRight: "1rem" }} />
+      </Link>
       <DropdownMenu>
         <DropdownMenuTrigger className="flex items-center justify-center outline-none">
           {!isSignedIn ? (
@@ -65,13 +67,15 @@ const MobileProfileDropDown = () => {
           >
             <Link href={"/store/dashboard"}>Your shop</Link>
           </DropdownMenuItem>
-          <DropdownMenuItem
-            className={`rounded-[5px] ${
-              !isSignedIn && "text-gray-300 pointer-events-none"
-            }`}
-          >
-            Wishlist
-          </DropdownMenuItem>
+          <Link href="/user/dashboard/wishlist">
+            <DropdownMenuItem
+              className={`rounded-[5px] ${
+                !isSignedIn && "text-gray-300 pointer-events-none"
+              }`}
+            >
+              Wishlist
+            </DropdownMenuItem>
+          </Link>
           <DropdownMenuItem
             className={`rounded-[5px] ${
               !isSignedIn && "text-gray-300 pointer-events-none"

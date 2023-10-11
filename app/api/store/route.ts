@@ -9,28 +9,48 @@ export const GET = async (request: NextRequest) => {
   const url = request.nextUrl.searchParams;
   const storeId = url.get("id");
 
-  await connect();
+  console.log(storeId);
 
-  const store: StoreType | null = await Store.findOne({ _id: storeId });
-
-  if (!store) {
+  if (storeId==="default") {
     return new Response(
       JSON.stringify({
         status: ResponseCodes.NOT_FOUND,
       }),
       { status: 404 }
-    );
+      );
   }
 
-  return new Response(
-    JSON.stringify({
-      status: ResponseCodes.SUCCESS,
-      data: {
-        store: store,
-      },
-    }),
-    { status: 200 }
-  );
+  try{
+    await connect();
+
+    const store: StoreType | null = await Store.findOne({ _id: storeId });
+
+    if (!store) {
+      return new Response(
+        JSON.stringify({
+          status: ResponseCodes.NOT_FOUND,
+        }),
+        { status: 404 }
+        );
+    }
+
+    return new Response(
+      JSON.stringify({
+        status: ResponseCodes.SUCCESS,
+        data: {
+          store: store,
+        },
+      }),
+      { status: 200 }
+      );
+  }catch (error) {
+    return new Response(
+      JSON.stringify({
+        status: ResponseCodes.UNKNOWN_ERROR,
+      }),
+      { status: 500 }
+      );
+  }
 };
 
 export async function POST(request: Request) {
@@ -46,11 +66,18 @@ export async function POST(request: Request) {
         status: ResponseCodes.NOT_FOUND,
       }),
       { status: 404 }
+      );
+
+  if(user.isSeller || user.storeId!=="default") return new Response(
+    JSON.stringify({
+      status: ResponseCodes.SUCCESS,
+    }),
+    { status: 200 }
     );
 
-  const newStore = new Store({
-    storeName,
-  });
+    const newStore = new Store({
+      storeName,
+    });
 
   await newStore.save();
 
@@ -64,5 +91,5 @@ export async function POST(request: Request) {
       status: ResponseCodes.SUCCESS,
     }),
     { status: 200 }
-  );
+    );
 }

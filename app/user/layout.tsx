@@ -12,11 +12,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body className="relative w-full h-[100vh]">
-        {children}
-        <Navbar />
-      </body>
-    </html>
+    <div className="relative w-full h-[100vh]">
+      {children}
+      <Navbar />
+    </div>
   );
 }

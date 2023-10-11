@@ -73,3 +73,22 @@ export const Specials = [
     search: "sneakers",
   },
 ];
+
+export const SellerFeatures = [
+  "Effortless Product Management: Query and filter items effortlessly. Managing your products is a breeze with our intuitive interface.",
+  "Convenient Online Listing: Add your products directly from our website. No hassle, no complications. Just a few clicks and your item is live for the world to see.",
+  "Boost Your Visibility: Our unique rating-based system ensures that quality shines. Higher ratings mean higher placement, giving your items the attention they deserve.",
+  "Trustworthy Seller Verification: Gain credibility and trust with our verification process. Verified sellers rank higher, making them the preferred choice for discerning buyers."
+]
+
+const StoreNameMin = 4;
+const StoreNameMax = 24;
+
+export const StoreNameRules = {
+  min: StoreNameMin,
+  max: StoreNameMax,
+  rules: [
+    `Minimum characters : ${StoreNameMin}`,
+    `Max characters : ${StoreNameMax}`
+  ]
+}

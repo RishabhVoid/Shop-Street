@@ -22,7 +22,10 @@ const ListItem = ({ product: Product, cartProd = false }: Props) => {
           styles="text-xs scale-[0.9]"
         />
       ) : (
-        <AddToWishlist productId={product._id} styles="text-xs scale-[0.9]" />
+        <>
+          <AddToWishlist productId={product._id} styles="text-xs scale-[0.9]" />
+          <AddToCartToButton productId={product._id} styles="text-xs scale-[0.9]" />
+        </>
       )}
     </div>
   );

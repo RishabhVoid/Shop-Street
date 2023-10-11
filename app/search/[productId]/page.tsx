@@ -5,6 +5,9 @@ import ProductImagePreview from "@/components/ProductImagePreview";
 import GoBackButton from "../widgets/GoBackButton";
 import AddToCartToButton from "../widgets/AddToCartButton";
 import AddToWishlist from "../widgets/AddToWishlist";
+import Product from "@/models/Product";
+import connect from "@/lib/connect";
+import { ProductType } from "@/types";
 
 interface Props {
   params: {
@@ -64,3 +67,13 @@ const ProductView = async ({ params }: Props) => {
 };
 
 export default ProductView;
+
+export const generateStaticParams = async () =>{
+  await connect();
+
+  const products: ProductType[] = await Product.find();
+
+  return products.map(product=> ({
+    productId: product._id.toString()
+  }))
+};

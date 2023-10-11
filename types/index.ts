@@ -21,8 +21,10 @@ export type CategoriesType =
 export type OrderStatus = "shipped" | "on-way" | "delivered";
 
 export interface OrderDetails {
+  _id: string;
   address: string;
   email: string;
+  phoneNo: number;
 }
 
 export interface UserType {
@@ -30,6 +32,7 @@ export interface UserType {
   email: string;
   wishList: string[];
   cart: string[];
+  orders: string[];
   orderDetailOptions: OrderDetails[];
   recentTags: RecentTags;
   isSeller: boolean;
