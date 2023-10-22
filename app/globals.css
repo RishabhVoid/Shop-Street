@@ -40,3 +40,8 @@
 .no_scroll::-webkit-scrollbar {
   display: none;
 }
+
+.max_contain {
+  max-width: 90rem;
+  margin-inline: auto;
+}

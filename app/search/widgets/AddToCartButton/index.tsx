@@ -37,7 +37,11 @@ const AddToCartToButton = ({ productId, styles }: Props) => {
     if (userData.cart.includes(productId)) {
       updatedUserData = userData.cart.filter((prodId) => prodId !== productId);
     } else {
-      updatedUserData = [...userData.cart, productId];
+      if(userData.cart.length===10){
+        updatedUserData = userData.cart;  
+      }else{
+        updatedUserData = [...userData.cart, productId];
+      }
     }
     const rawRes = await fetch("/api/user", {
       method: "PATCH",

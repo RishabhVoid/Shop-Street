@@ -1,5 +1,7 @@
 import { Colors } from "@/constants";
 import { RiMoneyDollarCircleFill } from "react-icons/ri";
+import { ProductType } from "@/types";
+import Link from "next/link";
 import getProductById from "@/lib/getProductById";
 import ProductImagePreview from "@/components/ProductImagePreview";
 import GoBackButton from "../widgets/GoBackButton";
@@ -7,7 +9,6 @@ import AddToCartToButton from "../widgets/AddToCartButton";
 import AddToWishlist from "../widgets/AddToWishlist";
 import Product from "@/models/Product";
 import connect from "@/lib/connect";
-import { ProductType } from "@/types";
 
 interface Props {
   params: {
@@ -53,9 +54,11 @@ const ProductView = async ({ params }: Props) => {
           </div>
         </div>
         <div className="mx-4 flex flex-col gap-4 md:mt-auto">
-          <button className="bg-accent w-fit text-white px-4 py-2 rounded-full transition duration-200 hover:brightness-[1.1]">
-            Buy Now
-          </button>
+          <Link href={`/placeOrder/${product._id}`}>
+            <button className="bg-accent w-fit text-white px-4 py-2 rounded-full transition duration-200 hover:brightness-[1.1]">
+              Buy Now
+            </button>
+          </Link>
           <div className="mt-4 flex items-center gap-2 text-sm">
             <AddToCartToButton productId={params.productId} />
             <AddToWishlist productId={params.productId} />
@@ -67,13 +70,3 @@ const ProductView = async ({ params }: Props) => {
 };
 
 export default ProductView;
-
-export const generateStaticParams = async () =>{
-  await connect();
-
-  const products: ProductType[] = await Product.find();
-
-  return products.map(product=> ({
-    productId: product._id.toString()
-  }))
-};

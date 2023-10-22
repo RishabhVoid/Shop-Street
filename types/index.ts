@@ -59,10 +59,15 @@ export interface ProductType {
   deliveryDays: number;
 }
 
+export interface OrderProductIds {
+  productId: string;
+  sellerEmail: string;
+}
+
 export interface OrderType {
   _id: string;
   placedOn: string;
-  productId: string;
+  productIds: OrderProductIds[];
   status: OrderStatus;
   email: string;
   address: string;

@@ -60,6 +60,16 @@ export async function PATCH(request: Request) {
     orders,
   } = await request.json();
 
+  console.log(email,
+    wishList,
+    cart,
+    orderDetailOptions,
+    recentTags,
+    isSeller,
+    storeId,
+    money,
+    orders,);
+
   await connect();
 
   const isUpdated = await User.updateOne(

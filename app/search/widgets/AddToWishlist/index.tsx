@@ -35,11 +35,13 @@ const AddToWishlist = ({ productId, styles }: Props) => {
     if (!userData || !user || !user.email) return;
     let updatedUserData: string[] = [];
     if (userData.wishList.includes(productId)) {
-      updatedUserData = userData.wishList.filter(
-        (prodId) => prodId !== productId
-      );
+      updatedUserData = userData.wishList.filter((prodId) => prodId !== productId);
     } else {
-      updatedUserData = [...userData.wishList, productId];
+      if(userData.wishList.length===10){
+        updatedUserData = userData.wishList;  
+      }else{
+        updatedUserData = [...userData.wishList, productId];
+      }
     }
     const rawRes = await fetch("/api/user", {
       method: "PATCH",

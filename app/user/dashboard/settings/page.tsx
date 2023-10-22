@@ -114,7 +114,7 @@ const Settings = () => {
 
   const handleSignOut = () =>{
     signOut(auth);
-    router.replace("");
+    router.replace("/");
   };
 
   useEffect(()=>{
@@ -226,7 +226,7 @@ const Settings = () => {
             ))
           }
         </div>
-        <div className="p-4">
+        <div className="p-4 max-w-[65rem] mx-auto">
           <CustomButton styles="bg-red-700" callback={handleSignOut} title="Sign out" />
         </div>
       </div>

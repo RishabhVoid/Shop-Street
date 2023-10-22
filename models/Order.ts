@@ -1,12 +1,17 @@
 import mongoose from "mongoose";
 
+const productSchema = new mongoose.Schema({
+  productId: String,
+  sellerEmail: String,
+});
+
 const orderSchema = new mongoose.Schema({
   placedOn: {
     type: String,
     required: true,
   },
-  productId: {
-    type: String,
+  products: {
+    type: [productSchema],
     required: true,
   },
   status: {
@@ -23,10 +28,6 @@ const orderSchema = new mongoose.Schema({
     required: true,
   },
   phoneNo: {
-    type: String,
-    required: true,
-  },
-  sellerEmail: {
     type: String,
     required: true,
   },

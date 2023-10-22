@@ -14,7 +14,7 @@ const App = async () => {
   };
 
   return (
-    <main className="w-full h-full overflow-x-hidden overflow-y-auto no_pad_scroll">
+    <main className="w-full h-full max_contain overflow-x-hidden overflow-y-auto no_pad_scroll">
       <Header />
       <SuffledItemView products={getSlicedProducts(0, 12)} /> {/* 12 items */}
       <BoxedItemView products={getSlicedProducts(12, 20)} /> {/* 8 items */}
