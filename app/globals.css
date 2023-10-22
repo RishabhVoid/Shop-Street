@@ -3,6 +3,11 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --primary-accent: #ec7847;
+  --secondary-accent: #b95e37;
+}
+
 .custom_scroll {
   padding-right: 2.5px;
   padding-left: 2.5px;
