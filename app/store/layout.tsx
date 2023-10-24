@@ -12,7 +12,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="relative w-[100vw] h-[100vh] flex flex-col-reverse md:flex-row">
+    <div className="relative w-[100vw] max_contain h-[100vh] flex flex-col-reverse md:flex-row">
       <Navbar />
       {children}
     </div>

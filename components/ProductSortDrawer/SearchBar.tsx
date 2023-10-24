@@ -13,7 +13,7 @@ const SearchBar = ({ searchTerm, setSearchTerm }: Props) => {
         id="search_product"
         value={searchTerm}
         onChange={(event) => setSearchTerm(event.target.value)}
-        className="rounded-[5px] bg-slate-100 w-full text-[1rem] p-2 focus:outline-accent"
+        className="rounded-[5px] bg-slate-100 w-full text-[1rem] p-2 focus:outline-[--primary-accent]"
         placeholder="Search for items..."
       />
     </div>

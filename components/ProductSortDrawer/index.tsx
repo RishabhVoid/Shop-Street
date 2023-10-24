@@ -96,7 +96,7 @@ const ProductSortDrawer = ({
 
   return (
     <SheetContent className="bg-white w-[90%] sm:w-[30rem] p-2 h-full">
-      <div className="h-full overflow-y-auto flex-col pt-4 custom_scroll">
+      <div className="h-full overflow-y-auto flex-col pt-4 custom_scroll overflow-x-hidden">
         {isClientComponent && (
           <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
         )}
@@ -120,10 +120,10 @@ const ProductSortDrawer = ({
               {highToLow ? <h1>High to low</h1> : <h1>Low to high</h1>}
             </div>
             <div className="flex items-center">
-              <SelectTrigger className="w-full bg-accent text-white rounded-[5px]">
+              <SelectTrigger className="w-full bg-[--primary-accent] text-white rounded-[5px]">
                 <SelectValue placeholder="Sort by" className="capitalize" />
               </SelectTrigger>
-              <SelectContent className="text-white bg-accent rounded-[5px]">
+              <SelectContent className="text-white bg-[--primary-accent] rounded-[5px]">
                 {sortOptions.map((option) => (
                   <SelectItem
                     key={option}
@@ -135,7 +135,7 @@ const ProductSortDrawer = ({
                 ))}
               </SelectContent>
               <div
-                className={`bg-accent h-full p-2 ml-2 rounded-[5px] transition-transform duration-300 cursor-pointer ${
+                className={`bg-[--primary-accent] h-full p-2 ml-2 rounded-[5px] transition-transform duration-300 cursor-pointer ${
                   highToLow ? "rotate-0" : "rotate-180"
                 }`}
                 onClick={() => setHighToLow(!highToLow)}
@@ -148,13 +148,13 @@ const ProductSortDrawer = ({
         <div className="flex mt-8">
           <SheetClose
             onClick={handleSubmit}
-            className="bg-accent mr-4 text-white py-2 w-full text-center mt-4 rounded-[5px]"
+            className="bg-[--primary-accent] mr-4 text-white py-2 w-full text-center mt-4 rounded-[5px]"
           >
             Search with filters
           </SheetClose>
           <SheetClose
             onClick={clearFilters}
-            className="border-2 border-accent py-2 w-full text-center mt-4 rounded-[5px]"
+            className="border-2 border-[--primary-accent] py-2 w-full text-center mt-4 rounded-[5px]"
           >
             Clear filters
           </SheetClose>

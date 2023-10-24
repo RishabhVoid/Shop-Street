@@ -19,7 +19,7 @@
 }
 
 .custom_scroll::-webkit-scrollbar-thumb {
-  background-color: #ff8a16;
+  background-color: var(--primary-accent);
   border-radius: 5px;
 }
 
@@ -39,7 +39,8 @@
 }
 
 .no_pad_scroll::-webkit-scrollbar-thumb {
-  background-color: #ff8a16;
+  background-color: var(--primary-accent);
+  border-radius: 5px;
 }
 
 .no_scroll::-webkit-scrollbar {

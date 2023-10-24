@@ -1,10 +1,8 @@
-import { MongoClient } from "mongodb";
+import connect from "./connect";
+import User from "@/models/User";
 
 export default async function getUser(email: string) {
-  const client = new MongoClient(process.env.DB_URI!);
-  const db = client.db("shop_street");
-  const users = db.collection("users");
-  const user = await users.findOne({ email: email });
-  client.close();
+  await connect();
+  const user = await User.findOne({ email: email });
   return user;
 }

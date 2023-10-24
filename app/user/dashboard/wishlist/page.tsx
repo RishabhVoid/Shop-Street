@@ -6,6 +6,7 @@ import { ProductType, UserType } from "@/types";
 import { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import ListItem from "../../widgets/ListItem";
+import Header from "../../widgets/Header";
 
 const Wishlist = () => {
   const [products, setProducts] = useState<ProductType[]>([]);
@@ -48,12 +49,16 @@ const Wishlist = () => {
 
   return (
     <div className="h-full flex flex-col">
-      <h1 className="w-full p-2 font-primary text-xl md:text-2xl bg-accent text-white">My wishlist</h1>
+      <Header title="My Wishlist" />
       <div className="flex-1 w-full flex flex-wrap overflow-x-hidden overflow-y-auto no_pad_scroll md:custom_scroll">
-        {products.map((product) => (
-          <ListItem product={JSON.stringify(product)} key={product._id} />
-        ))}
-        <div className="my-[2rem] w-full h-[50px]"/>
+        {products.map((product) => {
+          if (product.inventory <= 0) return null;
+
+          return (
+            <ListItem product={JSON.stringify(product)} key={product._id} />
+          );
+        })}
+        <div className="my-[2rem] w-full h-[50px]" />
       </div>
     </div>
   );

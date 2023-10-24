@@ -22,10 +22,10 @@ const ProductImagePreview = ({ productId }: Props) => {
 
   return (
     <div className="md:absolute top-0 left-0 md:w-full w-auto h-full flex flex-col mx-auto">
-      <div className="flex-1 flex items-center justify-center">
+      <div className="h-full md:w-full w-fit flex items-center mx-auto justify-center md:absolute">
         {ImagePreviews.map((preview, index) => (
           <div
-            className={`absolute max-w-[35rem] w-[100%] md:w-[60%] h-[60%] md:min-w-[18rem] bg-white ${
+            className={`absolute w-[100%] h-[100%] bg-white ${
               frontPreview === index && "z-50"
             }`}
             key={preview}
@@ -41,12 +41,12 @@ const ProductImagePreview = ({ productId }: Props) => {
           </div>
         ))}
       </div>
-      <div className="flex items-center md:h-[20%] h-[10%] justify-center gap-4">
+      <div className="flex items-center md:h-[20%] h-[10%] mt-auto justify-center gap-4">
         {ImagePreviews.map((preview, index) => {
           const isActive = Boolean(index === frontPreview);
           return (
             <div
-              className={`relative w-[50px] h-[50px] rounded-[5px] cursor-pointer border-2 ${
+              className={`relative w-[50px] h-[50px] rounded-[5px] z-50 cursor-pointer border-2 ${
                 isActive ? "border-accent" : "border-slate-500"
               }`}
               key={preview}

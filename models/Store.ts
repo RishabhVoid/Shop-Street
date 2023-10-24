@@ -15,11 +15,6 @@ const storeSchema = new mongoose.Schema({
     required: true,
     default: [],
   },
-  orderIds: {
-    type: [String],
-    required: true,
-    default: [],
-  },
 });
 
 const Store = mongoose.models.Store || mongoose.model("Store", storeSchema);

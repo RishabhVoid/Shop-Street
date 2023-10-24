@@ -6,7 +6,7 @@ import { BiSolidExit } from "react-icons/bi";
 
 const Navbar = () => {
   return (
-    <div className="bg-accent p-2 flex items-center justify-evenly h-[3.5rem] md:h-[100vh] md:flex-col md:justify-end md:w-[3rem]">
+    <div className="bg-[--primary-accent] p-2 flex items-center justify-evenly h-[3.5rem] md:h-[100vh] md:flex-col md:justify-end md:w-[3rem]">
       <Link href={"/store/dashboard"} className="cursor-pointer md:mb-4">
         <div className="flex flex-col items-center">
           <BiSolidDashboard style={{ color: "white", fontSize: 24 }} />

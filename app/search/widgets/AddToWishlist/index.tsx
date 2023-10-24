@@ -35,11 +35,13 @@ const AddToWishlist = ({ productId, styles }: Props) => {
     if (!userData || !user || !user.email) return;
     let updatedUserData: string[] = [];
     if (userData.wishList.includes(productId)) {
-      updatedUserData = userData.wishList.filter((prodId) => prodId !== productId);
+      updatedUserData = userData.wishList.filter(
+        (prodId) => prodId !== productId
+      );
     } else {
-      if(userData.wishList.length===10){
-        updatedUserData = userData.wishList;  
-      }else{
+      if (userData.wishList.length === 10) {
+        updatedUserData = userData.wishList;
+      } else {
         updatedUserData = [...userData.wishList, productId];
       }
     }
@@ -75,7 +77,7 @@ const AddToWishlist = ({ productId, styles }: Props) => {
     <button
       onClick={async () => toggleInCart()}
       disabled={isDis}
-      className={`border-2 border-accent px-4 py-2 rounded-full transition duration-200 hover:bg-slate-200 ${
+      className={`border-2 border-[--primary-accent] px-4 py-2 rounded-full transition duration-200 hover:bg-slate-200 ${
         isDis && "opacity-50"
       } ${styles}`}
     >

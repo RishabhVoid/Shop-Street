@@ -12,7 +12,9 @@ const SearchBar = () => {
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
     if (!query.trim()) return;
-    router.push(`/search?pageNo=1&query=${query}`);
+    router.push(
+      `/search?pageNo=1&query=${query}&minPrice=0&maxPrice=100000&categories=&sortBy=price&highToLow=true`
+    );
   };
 
   return (
@@ -29,7 +31,7 @@ const SearchBar = () => {
       />
       <button
         type="submit"
-        className="p-3 pr-4 rounded-e-3lg h-full cursor-pointer transition-all duration-200"
+        className="p-3 pr-4 rounded-e-3xl h-full cursor-pointer transition-all duration-200"
       >
         <BsSearch />
       </button>

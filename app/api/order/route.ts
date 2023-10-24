@@ -3,47 +3,57 @@ import { ResponseCodes } from "@/constants";
 import connect from "@/lib/connect";
 import User from "@/models/User";
 import Order from "@/models/Order";
+import { OrderProductIds } from "@/types";
+import decreaseProductInventory from "@/lib/decreaseProductInventory";
 
-export const POST = async (request: NextRequest) =>{
-	const {
-		placedOn,
-	  productIds,
-	  email,
-		address,
-		phoneNo,
-		userEmail
-	} = await request.json();
+export const POST = async (request: NextRequest) => {
+  const { placedOn, products, email, address, phoneNo, userEmail, orderTotal } =
+    await request.json();
 
-	try{
-		await connect();
+  try {
+    await connect();
 
-		const newOrder = new Order({
-			placedOn,
-		  productIds,
-		  email,
-			address,
-			phoneNo,
-		});
+    const newOrder = new Order({
+      placedOn,
+      products,
+      email,
+      address,
+      phoneNo,
+    });
 
-		if(!newOrder) throw new Error("Error!");
+    if (!newOrder) throw new Error("Error!");
 
+    const user = await User.findOne({ email: userEmail });
 
-		const user = await User.findOne({ email: userEmail });
+    if (!user) throw new Error("User error");
 
-		if(!user) throw new Error("User error");
+    user.orders = [...user.orders, newOrder._id];
 
-		user.orders = [...user.orders, newOrder._id];
+    products.map(async (productData: OrderProductIds) => {
+      (async () =>
+        await decreaseProductInventory(
+          productData.productId,
+          productData.amount
+        ))();
+    });
 
-		await newOrder.save();
-		await user.save();
+    user.money = user.money - orderTotal;
 
-		return new Response(JSON.stringify({
-			status: ResponseCodes.SUCCESS
-		}), { status: 200 })
+    await user.save();
+    await newOrder.save();
 
-	} catch {
-		return new Response(JSON.stringify({
-			status: ResponseCodes.UNKNOWN_ERROR
-		}), { status: 500 })
-	};
+    return new Response(
+      JSON.stringify({
+        status: ResponseCodes.SUCCESS,
+      }),
+      { status: 200 }
+    );
+  } catch {
+    return new Response(
+      JSON.stringify({
+        status: ResponseCodes.UNKNOWN_ERROR,
+      }),
+      { status: 500 }
+    );
+  }
 };

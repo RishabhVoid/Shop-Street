@@ -16,7 +16,7 @@ const CustomButton = ({
       disabled={disabled}
       type={type}
       className={`${
-        disabled ? "bg-gray-500" : "bg-accent"
+        disabled ? "bg-gray-500" : "bg-[--primary-accent]"
       } text-white py-1 px-4 rounded-[5px] transition duration-200 hover:brightness-110 ${styles}`}
     >
       <h1 className="mr-2">{title}</h1>

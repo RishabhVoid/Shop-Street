@@ -46,6 +46,7 @@ const FilterBar = () => {
     );
 
     router.replace(updatedPath);
+    setIsFilterBarVisible(false);
   };
   const clearFilters = () => {
     const updatedPath = updateSearchParams(
@@ -62,6 +63,7 @@ const FilterBar = () => {
     setHighToLow(true);
 
     router.replace(updatedPath);
+    setIsFilterBarVisible(false);
   };
 
   const handleGoBack = () => {
@@ -70,7 +72,11 @@ const FilterBar = () => {
 
   return (
     <>
-      <div className={`h-full flex-col p-4 w-[20rem] absolute md:relative bg-white z-50 md:flex border-2 border-r-slate-300 transition-all duration-300 ${!isFilterBarVisible ? "-left-[100%] md:left-0" : "left-0"}`}>
+      <div
+        className={`h-full flex-col p-4 w-[20rem] absolute md:relative bg-white z-50 md:flex border-2 border-r-slate-300 transition-all duration-300 ${
+          !isFilterBarVisible ? "-left-[100%] md:left-0" : "left-0"
+        }`}
+      >
         <h1 className="font-primary text-2xl mb-4">Filters</h1>
         <div className="flex items-center w-full">
           <PriceRangeSelector
@@ -78,7 +84,10 @@ const FilterBar = () => {
             setPriceRange={setPriceRange}
           />
         </div>
-        <CategoryChooser categories={categories} setCategories={setCategories} />
+        <CategoryChooser
+          categories={categories}
+          setCategories={setCategories}
+        />
         <div className="mb-2">
           <Select
             defaultValue={sortBy}
@@ -91,18 +100,22 @@ const FilterBar = () => {
               {highToLow ? <h1>High to low</h1> : <h1>Low to high</h1>}
             </div>
             <div className="flex items-center">
-              <SelectTrigger className="w-full bg-accent text-white rounded-[5px]">
+              <SelectTrigger className="w-full bg-[--primary-accent] text-white rounded-[5px]">
                 <SelectValue placeholder="Sort by" className="capitalize" />
               </SelectTrigger>
-              <SelectContent className="text-white bg-accent rounded-[5px]">
+              <SelectContent className="text-white bg-[--primary-accent] rounded-[5px]">
                 {sortOptions.map((option) => (
-                  <SelectItem key={option} className="capitalize" value={option}>
+                  <SelectItem
+                    key={option}
+                    className="capitalize"
+                    value={option}
+                  >
                     {option}
                   </SelectItem>
                 ))}
               </SelectContent>
               <div
-                className={`bg-accent h-full p-2 ml-2 rounded-[5px] transition-transform duration-300 cursor-pointer ${
+                className={`bg-[--primary-accent] h-full p-2 ml-2 rounded-[5px] transition-transform duration-300 cursor-pointer ${
                   highToLow ? "rotate-0" : "rotate-180"
                 }`}
                 onClick={() => setHighToLow(!highToLow)}
@@ -120,7 +133,7 @@ const FilterBar = () => {
             Go back
           </button>
           <button
-            className="border-2 border-accent bg-white text-black mb-2 md:mb-0 py-2 w-full text-center mt-4 rounded-[5px]"
+            className="border-2 border-[--primary-accent] bg-white text-black mb-2 md:mb-0 py-2 w-full text-center mt-4 rounded-[5px]"
             onClick={clearFilters}
           >
             Clear filters
@@ -128,13 +141,16 @@ const FilterBar = () => {
         </div>
         <CustomButton
           callback={handleSubmit}
-          styles="bg-accent mr-4 text-white py-2 w-full text-center mt-auto rounded-[5px]"
+          styles="bg-[--primary-accent] mr-4 text-white py-2 w-full text-center mt-auto rounded-[5px]"
           title="Apply filters"
         />
       </div>
-      <button onClick={()=> setIsFilterBarVisible(!isFilterBarVisible)} className="absolute block md:hidden bg-accent p-4 rounded-full bottom-2 left-2 z-50">
+      <button
+        onClick={() => setIsFilterBarVisible(!isFilterBarVisible)}
+        className="absolute block md:hidden bg-[--primary-accent] p-4 rounded-full bottom-2 left-2 z-50"
+      >
         <FaFilter style={{ color: "white" }} />
-      </button> 
+      </button>
     </>
   );
 };

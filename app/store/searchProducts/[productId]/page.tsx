@@ -15,7 +15,7 @@ const ProductPage = async ({ params }: Props) => {
   const product = await getProductById(params.productId);
 
   return (
-    <div className="w-full flex flex-col h-auto md:flex-row max-w-[90rem] mx-auto overflow-x-hidden overflow-y-auto custom_scroll">
+    <div className="w-full max_contain flex flex-col h-auto md:flex-row max-w-[90rem] mx-auto overflow-x-hidden overflow-y-auto custom_scroll">
       <div className="md:w-1/2 w-full relative min-h-[70vh] md:h-[100vh] flex items-center justify-center">
         <ProductImagePreview productId={String(product._id)} />
       </div>
@@ -25,14 +25,14 @@ const ProductPage = async ({ params }: Props) => {
             {product.matchingCategories.map((category) => (
               <span
                 key={category}
-                className="bg-accent px-2 py-1 rounded-[50px] capitalize text-white"
+                className="bg-[--primary-accent] px-2 py-1 rounded-[50px] capitalize text-white"
               >
                 #{category}
               </span>
             ))}
           </div>
           <div className="md:mt-[10%] p-4">
-            <h1 className="flex items-center text-2xl text-accent font-bold">
+            <h1 className="flex items-center text-2xl text-[--primary-accent] font-bold">
               {product.price}
               <div className="relative rotate-[180]">
                 <RiMoneyDollarCircleFill
@@ -70,10 +70,10 @@ const ProductPage = async ({ params }: Props) => {
           </Link>
         </div>
         <div className="mt-4 mx-4 flex flex-wrap gap-4 pointer-events-none opacity-30 md:mt-8">
-          <button className="bg-accent text-white px-4 py-2 rounded-full transition duration-200 hover:brightness-[1.1]">
+          <button className="bg-[--primary-accent] text-white px-4 py-2 rounded-full transition duration-200 hover:brightness-[1.1]">
             Buy Now
           </button>
-          <button className="border-2 border-accent px-4 py-2 rounded-full transition duration-200 hover:bg-slate-200">
+          <button className="border-2 border-[--primary-accent] px-4 py-2 rounded-full transition duration-200 hover:bg-slate-200">
             Add to cart
           </button>
         </div>

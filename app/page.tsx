@@ -1,32 +1,43 @@
-import getFrontPageProducts from "@/lib/getFrontPageProducts";
+import getFrontPageProducts from "@/lib/getUnfinteredItemsSection";
 import Header from "./widgets/Header";
-import SuffledItemView from "./widgets/ShuffledItemView";
+import ShuffledItemView from "./widgets/ShuffledItemView";
 import BoxedItemView from "./widgets/BoxedItemView";
-import { ProductType } from "@/types";
+import getSlicedProducts from "@/lib/getSlicedProducts";
+import LoadMore from "./widgets/LoadMore";
+import { Fragment } from "react";
 
-// Front page only consists of 100 item for now, given the lack of data to show,
-
-const App = async () => {
-  const products = await getFrontPageProducts();
-
-  const getSlicedProducts = (start: number, end: number): ProductType[] => {
-    return products.slice(start, end);
+interface Props {
+  searchParams: {
+    skip: string;
   };
+}
+
+const App = async ({ searchParams }: Props) => {
+  let skipAmount = 0;
+
+  if (searchParams.skip) {
+    try {
+      skipAmount = parseInt(searchParams.skip);
+    } catch {}
+  }
+
+  const products = await getFrontPageProducts(skipAmount);
+  const lastChunkValid = products.reverse()[0].length >= 20;
 
   return (
     <main className="w-full h-full max_contain overflow-x-hidden overflow-y-auto no_pad_scroll">
       <Header />
-      <SuffledItemView products={getSlicedProducts(0, 12)} /> {/* 12 items */}
-      <BoxedItemView products={getSlicedProducts(12, 20)} /> {/* 8 items */}
-      {/* Total 20 till now */}
-      <SuffledItemView products={getSlicedProducts(20, 32)} /> {/* 12 items */}
-      <BoxedItemView products={getSlicedProducts(32, 50)} /> {/* 18 items */}
-      {/* Total 50 till now */}
-      <SuffledItemView products={getSlicedProducts(50, 62)} /> {/* 12 items */}
-      <SuffledItemView products={getSlicedProducts(62, 74)} /> {/* 12 items */}
-      {/* Above two get 24 items */}
-      <BoxedItemView products={getSlicedProducts(74, 100)} /> {/* 18 items */}
-      {/* Total 100 items */}
+      {products.map((chunk, index) => (
+        <Fragment key={index * 2}>
+          {chunk.length >= 20 && (
+            <>
+              <ShuffledItemView products={getSlicedProducts(0, 12, chunk)} />
+              <BoxedItemView products={getSlicedProducts(12, 20, chunk)} />
+            </>
+          )}
+        </Fragment>
+      ))}
+      <LoadMore skip={skipAmount} lastChunkValid={lastChunkValid} />
     </main>
   );
 };

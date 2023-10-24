@@ -11,7 +11,7 @@ interface Props {
 const Header = ({ displayName, storeName, imageUrl }: Props) => {
   return (
     <div className="w-full flex items-center p-2">
-      <h1 className="hidden md:block text-lg font-primary bg-accent text-white rounded-[10px] py-2 px-4 -ml-[3.5rem]">
+      <h1 className="hidden md:block text-lg font-primary bg-[--primary-accent] text-white rounded-[10px] py-2 px-4 -ml-[3.5rem]">
         Dashboard
       </h1>
       <div className="flex items-center w-[100vw] md:w-auto md:ml-auto">

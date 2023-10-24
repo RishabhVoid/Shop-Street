@@ -5,6 +5,8 @@ interface Props {
   products: ProductType[];
 }
 
+// takes in 8 items
+
 const BoxedItemView = ({ products }: Props) => {
   return (
     <div className="md:p-4 p-0 w-full flex flex-wrap items-center justify-center">

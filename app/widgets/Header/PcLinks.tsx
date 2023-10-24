@@ -1,19 +1,10 @@
 "use client";
 
 import { useAuthState, useSignInWithGoogle } from "react-firebase-hooks/auth";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
-import { MdAttachMoney } from "react-icons/md";
-import { ImCart } from "react-icons/im";
-import { RiAccountCircleFill } from "react-icons/ri";
-import { MdOutlinePlaylistPlay } from "react-icons/md";
-import Link from "next/link";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
+import { RiLoginCircleFill } from "react-icons/ri";
 import { auth } from "@/firebaseConfig";
-import { useRouter } from "next/navigation";
+import PcSignedInLinks from "./PcSignedInLinks";
 
 const PcLinks = () => {
   const [signInWithGoogle] = useSignInWithGoogle(auth);
@@ -21,23 +12,18 @@ const PcLinks = () => {
   const isLoading = loading;
   const isSignedIn = typeof user?.email === "string";
 
-  const router = useRouter();
-
-  const goToLink = (link: string) => {
-    router.push(link);
-  };
-
   if (isLoading)
     return (
       <div className="hidden lg:flex ml-4">
-        <RiAccountCircleFill
-          style={{
-            color: "white",
-            fontSize: 28,
-            marginRight: "5px",
-            cursor: "pointer",
-          }}
-        />
+        <div className="animate-spin flex items-center justify-center mr-2">
+          <AiOutlineLoading3Quarters
+            style={{
+              color: "white",
+              fontSize: 24,
+              cursor: "pointer",
+            }}
+          />
+        </div>
         <h1 className="text-white">Loading user...</h1>
       </div>
     );
@@ -45,80 +31,28 @@ const PcLinks = () => {
   return (
     <div className="hidden lg:flex items-center ml-8 mr-4">
       {!isSignedIn ? (
-        <h1
-          className="cursor-pointer text-white hover:text-gray-100"
+        <div
+          className="flex items-center group"
           onClick={() => signInWithGoogle()}
         >
-          Sign in
-        </h1>
-      ) : (
-        <div className="flex items-center">
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger onClick={() => goToLink("/user/dashboard/cart")}>
-                <ImCart
-                  style={{
-                    color: "white",
-                    fontSize: 24,
-                    marginRight: "1rem",
-                    cursor: "pointer",
-                  }}
-                />
-              </TooltipTrigger>
-              <TooltipContent className="bg-white rounded-[5px]">
-                Cart
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger
-                onClick={() => goToLink("/user/dashboard/wishlist")}
-              >
-                <MdOutlinePlaylistPlay
-                  style={{
-                    color: "white",
-                    fontSize: 28,
-                    marginRight: "1rem",
-                    cursor: "pointer",
-                  }}
-                />
-              </TooltipTrigger>
-              <TooltipContent className="bg-white rounded-[5px]">
-                Wishlist
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger>
-                <Link href={"/store/dashboard"}>
-                  <MdAttachMoney
-                    style={{
-                      color: "white",
-                      fontSize: 24,
-                      marginRight: "4rem",
-                      cursor: "pointer",
-                    }}
-                  />
-                </Link>
-              </TooltipTrigger>
-              <TooltipContent className="bg-white rounded-[5px]">
-                Your shop
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
-          <div className="flex cursor-pointer group">
-            <img
-              src={user?.photoURL || ""}
-              alt="user"
-              className="w-[28px] rounded-full mr-2"
+          <div className="flex items-center mr-2 justify-center">
+            <RiLoginCircleFill
+              style={{
+                color: "white",
+                fontSize: "2rem",
+                cursor: "pointer",
+              }}
             />
-            <h2 className="text-white text-md group-hover:text-gray-300">
-              {user?.displayName || ""}
-            </h2>
           </div>
+          <h2 className="text-slate-300 group-hover:text-white cursor-pointer transition duration-200">
+            Sign in
+          </h2>
         </div>
+      ) : (
+        <PcSignedInLinks
+          displayName={user?.displayName}
+          photoURL={user?.photoURL}
+        />
       )}
     </div>
   );

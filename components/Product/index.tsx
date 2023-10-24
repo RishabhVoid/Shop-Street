@@ -8,10 +8,9 @@ import { useRouter } from "next/navigation";
 
 interface Props {
   product: ProductType;
-  inSellerView: boolean;
 }
 
-const Product = ({ product, inSellerView }: Props) => {
+const Product = ({ product }: Props) => {
   const imageRef = ref(storage, `${product._id}-main`);
   const [imageUrl, loading] = useDownloadURL(imageRef);
 
@@ -56,7 +55,7 @@ const Product = ({ product, inSellerView }: Props) => {
             {product.title}
           </h2>
           <button
-            className="bg-accent transition duration-300 hover:bg-slate-300 hover:text-black p-2 mx-auto rounded-[5px] flex items-center mt-2 text-white"
+            className="bg-[--primary-accent] transition duration-300 hover:bg-slate-300 hover:text-black p-2 mx-auto rounded-[5px] flex items-center mt-2 text-white"
             onClick={() => {
               router.push(`/store/searchProducts/${product._id}`);
             }}

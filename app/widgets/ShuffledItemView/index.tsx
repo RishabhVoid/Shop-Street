@@ -5,6 +5,8 @@ interface Props {
   products: ProductType[];
 }
 
+// takes in 12 items
+
 const SuffledItemView = ({ products }: Props) => {
   return (
     <>

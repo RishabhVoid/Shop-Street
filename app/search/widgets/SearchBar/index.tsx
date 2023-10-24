@@ -34,7 +34,7 @@ const SearchBar = ({ query: QueryTerm }: Props) => {
         />
         <button
           type="submit"
-          className="bg-accent h-full w-[60px] flex cursor-pointer transition duration-200 hover:brightness-110 items-center justify-center"
+          className="bg-[--primary-accent] h-full w-[60px] flex cursor-pointer transition duration-200 hover:brightness-110 items-center justify-center"
         >
           <AiOutlineSearch style={{ color: "white", fontSize: 32 }} />
         </button>

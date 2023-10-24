@@ -30,8 +30,7 @@ export const GET = async (request: NextRequest) => {
         data: products,
       })
     );
-  } catch (error) {
-    console.log(error);
+  } catch {
     return new Response(
       JSON.stringify({
         status: ResponseCodes.UNKNOWN_ERROR,

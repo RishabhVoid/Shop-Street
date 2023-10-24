@@ -2,6 +2,7 @@
 
 import { RiAccountCircleFill } from "react-icons/ri";
 import { ImCart } from "react-icons/im";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -23,8 +24,17 @@ const MobileProfileDropDown = () => {
 
   if (isLoading)
     return (
-      <div className="ml-auto lg:hidden">
-        <h1 className="text-white text-base">Loading user...</h1>
+      <div className="flex lg:hidden ml-auto">
+        <div className="animate-spin flex items-center justify-center mr-2">
+          <AiOutlineLoading3Quarters
+            style={{
+              color: "white",
+              fontSize: 24,
+              cursor: "pointer",
+            }}
+          />
+        </div>
+        <h1 className="text-white">Loading user...</h1>
       </div>
     );
 

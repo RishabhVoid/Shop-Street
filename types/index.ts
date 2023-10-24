@@ -53,6 +53,7 @@ export interface ProductType {
   desc: string;
   price: number;
   matchingCategories: CategoriesType[];
+  sellerEmail: string;
   rating: number;
   inventory: number;
   maxDistance: number;
@@ -62,6 +63,7 @@ export interface ProductType {
 export interface OrderProductIds {
   productId: string;
   sellerEmail: string;
+  amount: number;
 }
 
 export interface OrderType {
@@ -70,6 +72,12 @@ export interface OrderType {
   productIds: OrderProductIds[];
   status: OrderStatus;
   email: string;
+  address: string;
+}
+
+export interface OrderDetailPresetType {
+  email: string;
+  phoneNo: string;
   address: string;
 }
 

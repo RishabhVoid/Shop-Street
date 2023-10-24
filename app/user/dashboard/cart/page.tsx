@@ -8,6 +8,7 @@ import { ProductType, UserType } from "@/types";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "@/firebaseConfig";
 import { IoIosAddCircle } from "react-icons/io";
+import Header from "../../widgets/Header";
 
 const Cart = () => {
   const [products, setProducts] = useState<ProductType[]>([]);
@@ -45,12 +46,12 @@ const Cart = () => {
     setProducts(prods);
   };
 
-  const orderCurrentCart = () =>{
-    if(!products) return;
-    if(products.length === 0) return;
-    const prodIds = products.map(prod=>{
+  const orderCurrentCart = () => {
+    if (!products) return;
+    if (products.length === 0) return;
+    const prodIds = products.map((prod) => {
       return prod._id;
-    })
+    });
     const prodIdString = prodIds.join("__");
     router.push(`/placeOrder/${prodIdString}`);
   };
@@ -62,16 +63,29 @@ const Cart = () => {
 
   return (
     <div className="h-full flex flex-col">
-      <h1 className="w-full p-2 font-primary text-xl md:text-2xl bg-accent text-white">My Cart</h1>
+      <Header title="My Cart" />
       <div className="flex-1 w-full flex flex-wrap pb-[6rem] overflow-x-hidden overflow-y-auto no_pad_scroll md:custom_scroll">
-        {products.map((product) => (
-          <ListItem product={JSON.stringify(product)} key={product._id} cartProd />
-        ))}
-        <div onClick={orderCurrentCart} className="w-[170px] mb-[3rem] cursor-pointer h-[344px] bg-accent flex flex-col items-center justify-center">
+        {products.map((product) => {
+          if (product.inventory <= 0) return null;
+
+          return (
+            <ListItem
+              product={JSON.stringify(product)}
+              key={product._id}
+              cartProd
+            />
+          );
+        })}
+        <div
+          onClick={orderCurrentCart}
+          className="w-[170px] mb-[3rem] cursor-pointer h-[344px] bg-[--primary-accent] flex flex-col items-center justify-center"
+        >
           <div>
-            <IoIosAddCircle style={{ color:"white", fontSize: 48 }} />
+            <IoIosAddCircle style={{ color: "white", fontSize: 48 }} />
           </div>
-          <h2 className="w-[70%] text-center mt-2 text-white">Place an order with the current cart.</h2>
+          <h2 className="w-[70%] text-center mt-2 text-white">
+            Place an order with the current cart.
+          </h2>
         </div>
       </div>
     </div>

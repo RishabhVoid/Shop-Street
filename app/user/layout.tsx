@@ -12,7 +12,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="relative w-full h-[100vh]">
+    <div className="relative w-full h-[100vh] max_contain">
       {children}
       <Navbar />
     </div>

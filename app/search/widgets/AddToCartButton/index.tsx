@@ -37,9 +37,9 @@ const AddToCartToButton = ({ productId, styles }: Props) => {
     if (userData.cart.includes(productId)) {
       updatedUserData = userData.cart.filter((prodId) => prodId !== productId);
     } else {
-      if(userData.cart.length===10){
-        updatedUserData = userData.cart;  
-      }else{
+      if (userData.cart.length === 10) {
+        updatedUserData = userData.cart;
+      } else {
         updatedUserData = [...userData.cart, productId];
       }
     }
@@ -75,7 +75,7 @@ const AddToCartToButton = ({ productId, styles }: Props) => {
     <button
       onClick={async () => toggleInCart()}
       disabled={isDis}
-      className={`border-2 border-accent px-4 py-2 rounded-full transition duration-200 hover:bg-slate-200 ${
+      className={`border-2 border-[--primary-accent] px-4 py-2 rounded-full transition duration-200 hover:bg-slate-200 ${
         isDis && "opacity-50"
       } ${styles}`}
     >
