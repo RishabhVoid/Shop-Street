@@ -69,10 +69,11 @@ export interface OrderProductIds {
 export interface OrderType {
   _id: string;
   placedOn: string;
-  productIds: OrderProductIds[];
+  products: OrderProductIds[];
   status: OrderStatus;
   email: string;
   address: string;
+  phoneNo: string;
 }
 
 export interface OrderDetailPresetType {

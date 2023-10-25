@@ -5,6 +5,7 @@ import BoxedItemView from "./widgets/BoxedItemView";
 import getSlicedProducts from "@/lib/getSlicedProducts";
 import LoadMore from "./widgets/LoadMore";
 import { Fragment } from "react";
+import Footer from "./widgets/Footer";
 
 interface Props {
   searchParams: {
@@ -38,6 +39,7 @@ const App = async ({ searchParams }: Props) => {
         </Fragment>
       ))}
       <LoadMore skip={skipAmount} lastChunkValid={lastChunkValid} />
+      <Footer />
     </main>
   );
 };

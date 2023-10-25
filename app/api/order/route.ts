@@ -3,7 +3,7 @@ import { ResponseCodes } from "@/constants";
 import connect from "@/lib/connect";
 import User from "@/models/User";
 import Order from "@/models/Order";
-import { OrderProductIds } from "@/types";
+import { OrderProductIds, OrderType, UserType } from "@/types";
 import decreaseProductInventory from "@/lib/decreaseProductInventory";
 
 export const POST = async (request: NextRequest) => {
@@ -47,6 +47,48 @@ export const POST = async (request: NextRequest) => {
         status: ResponseCodes.SUCCESS,
       }),
       { status: 200 }
+    );
+  } catch {
+    return new Response(
+      JSON.stringify({
+        status: ResponseCodes.UNKNOWN_ERROR,
+      }),
+      { status: 500 }
+    );
+  }
+};
+
+export const GET = async (request: NextRequest) => {
+  const searchParams = request.nextUrl.searchParams;
+  const isSeller = searchParams.get("isSeller");
+  const email = searchParams.get("email");
+
+  try {
+    let orders: OrderType[] | null = [];
+
+    if (isSeller === "true") {
+      orders = await Order.find({
+        products: {
+          $elemMatch: {
+            sellerEmail: email,
+          },
+        },
+      });
+    } else {
+      const user: UserType | null = await User.findOne({ email: email });
+      if (user) {
+        const orderIds = user.orders;
+        orders = await Order.find({ _id: { $in: orderIds } });
+      }
+    }
+
+    return new Response(
+      JSON.stringify({
+        status: ResponseCodes.SUCCESS,
+        data: {
+          orders,
+        },
+      })
     );
   } catch {
     return new Response(

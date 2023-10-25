@@ -8,6 +8,8 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { useRouter } from "next/navigation";
 import { StoreType, UserType } from "@/types";
 import Header from "./widgets/Header";
+import BusinessOverview from "./widgets/BusinessOverview";
+import OrdersList from "./widgets/OrdersList";
 
 const StoreDashboard = () => {
   const [pageLoading, setPageLoading] = useState(true);
@@ -58,12 +60,14 @@ const StoreDashboard = () => {
   if (loading || pageLoading) return <LoadingOverlay />;
 
   return (
-    <div className="w-full flex flex-col h-full">
+    <div className="w-full flex flex-col h-full overflow-x-hidden overflow-y-auto no_pad_scroll">
       <Header
         displayName={user?.displayName}
         storeName={store?.storeName}
         imageUrl={user?.photoURL}
       />
+      <BusinessOverview store={store} />
+      <OrdersList />
     </div>
   );
 };

@@ -11,7 +11,7 @@ interface Props {
 const Header = ({ displayName, storeName, imageUrl }: Props) => {
   return (
     <div className="w-full flex items-center p-2">
-      <h1 className="hidden md:block text-lg font-primary bg-[--primary-accent] text-white rounded-[10px] py-2 px-4 -ml-[3.5rem]">
+      <h1 className="hidden md:block text-lg font-primary bg-[--primary-accent] text-white z-[1000] rounded-[10px] py-2 px-4">
         Dashboard
       </h1>
       <div className="flex items-center w-[100vw] md:w-auto md:ml-auto">
@@ -22,6 +22,7 @@ const Header = ({ displayName, storeName, imageUrl }: Props) => {
         />
         <div className="flex flex-col md:mr-4">
           <h1 className="text-sm md:text-base">
+            {!storeName && "Loading..."}
             {storeName?.slice(0, 20)}
             {(storeName?.length || 0) > 20 && "..."}
           </h1>

@@ -24,7 +24,6 @@ const Search = async ({ searchParams }: Props) => {
         <div className="flex-1 h-full flex flex-col">
           <SearchBar query={searchParams.query || ""} />
           <Suspense fallback={<FallBack />}>
-            {/* @ts-expect-error */}
             <SearchedItems params={searchParams} />
           </Suspense>
         </div>
