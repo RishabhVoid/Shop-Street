@@ -2,21 +2,20 @@
 
 import CustomButton from "@/components/CustomButton";
 import { ResponseCodes } from "@/constants";
-import { auth } from "@/firebaseConfig";
 import { useRouter } from "next/navigation";
 import { useRef, FormEvent } from "react";
-import { useAuthState } from "react-firebase-hooks/auth";
 import { SellerFeatures, Colors } from "@/constants";
 import { useToast } from "@/components/ui/use-toast";
 import { StoreNameRules } from "@/constants";
 import { AiFillCaretLeft } from "react-icons/ai";
+import useAuth from "@/hooks/useAuth";
 
 const CreateStore = () => {
   const inputRef = useRef<HTMLInputElement>(null);
 
   const router = useRouter();
 
-  const [user] = useAuthState(auth);
+  const { authState } = useAuth();
   const { toast } = useToast();
 
   const createStore = async (storeName: string, userEmail: string) => {
@@ -41,6 +40,12 @@ const CreateStore = () => {
     event.preventDefault();
     if (!inputRef.current) return;
     const shopName = inputRef.current.value;
+    if (authState?.error?.length) {
+      toast({
+        title: "There was an error fetching user!",
+        description: "There was a problem fetching your account details, loggin out and back in might fix this issue"
+      })
+    };
     if (!shopName.trim()) {
       toast({
         title: "Please provide with a valid shop name",
@@ -60,7 +65,7 @@ const CreateStore = () => {
       });
       return;
     }
-    (async () => await createStore(shopName, user?.email || ""))();
+    (async () => await createStore(shopName, authState?.user?.email || ""))();
   };
 
   return (
@@ -108,7 +113,7 @@ const CreateStore = () => {
             placeholder="Enter store name here..."
             className="bg-slate-100 mt-2 rounded-[5px] text-base py-2 px-4 mb-4 outline-none"
           />
-          <CustomButton title="Submit" type="submit" styles="pt-2" />
+          <CustomButton title="Submit" type="submit" styles="pt-2" disabled={authState?.isLoading ?? true} />
           <div className="mt-2">
             {StoreNameRules.rules.map((rule) => (
               <h2 key={rule} className="text-sm">

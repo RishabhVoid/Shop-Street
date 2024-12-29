@@ -1,6 +1,6 @@
 import { useToast } from "@/components/ui/use-toast";
 import { ResponseCodes } from "@/constants";
-import { auth } from "@/firebaseConfig";
+import useAuth from "@/hooks/useAuth";
 import getCustomTimeStamp from "@/lib/getCustomTimeStamp";
 import isValidEmail from "@/lib/isValidEmail";
 import {
@@ -11,7 +11,6 @@ import {
 } from "@/types";
 import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
-import { useAuthState } from "react-firebase-hooks/auth";
 
 export interface ProductsData {
   product: ProductType;
@@ -42,7 +41,7 @@ const useHandleOrder = (prodIds: string) => {
 
   const router = useRouter();
 
-  const [user, loading] = useAuthState(auth);
+  const { authState } = useAuth();
   const { toast } = useToast();
 
   const getUser = async (email: string) => {
@@ -87,7 +86,7 @@ const useHandleOrder = (prodIds: string) => {
     products: OrderProductIds[],
     placedOn: string
   ) => {
-    if (userData === null || userData === undefined || !user || !user?.email) {
+    if (userData === null || userData === undefined || !authState?.user || !authState?.user?.email) {
       setIsProcessing(false);
       return;
     }
@@ -100,7 +99,7 @@ const useHandleOrder = (prodIds: string) => {
         email,
         address,
         phoneNo,
-        userEmail: user?.email,
+        userEmail: authState?.user?.email,
         orderTotal,
       }),
     });
@@ -197,10 +196,10 @@ const useHandleOrder = (prodIds: string) => {
   };
 
   useEffect(() => {
-    if (loading || !user || !user?.email) return;
-    (async () => await getUser(user.email!))();
+    if ((authState?.isLoading ?? true) || !authState?.user || !authState?.user?.email) return;
+    (async () => await getUser(authState?.user?.email!))();
     (async () => await getOrderedItems())();
-  }, [loading, user?.email]);
+  }, [authState?.isLoading ?? true, authState?.user?.email]);
 
   return {
     orderTotal,

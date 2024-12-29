@@ -5,17 +5,16 @@ import { useRouter } from "next/navigation";
 import { ResponseCodes } from "@/constants";
 import { useEffect, useState } from "react";
 import { ProductType, UserType } from "@/types";
-import { useAuthState } from "react-firebase-hooks/auth";
-import { auth } from "@/firebaseConfig";
 import { IoIosAddCircle } from "react-icons/io";
 import Header from "../../widgets/Header";
+import useAuth from "@/hooks/useAuth";
 
 const Cart = () => {
   const [products, setProducts] = useState<ProductType[]>([]);
 
   const router = useRouter();
 
-  const [user, loading] = useAuthState(auth);
+  const { authState } = useAuth();
 
   const getWishListItems = async (email: string) => {
     const rawRes = await fetch(`/api/user?email=${email}`);
@@ -57,9 +56,9 @@ const Cart = () => {
   };
 
   useEffect(() => {
-    if (loading || !user || !user.email) return;
-    (async () => getWishListItems(user.email!))();
-  }, [loading, user?.email]);
+    if (authState?.isLoading || !authState?.user || !authState?.user?.email) return;
+    (async () => getWishListItems(authState?.user?.email!))();
+  }, [authState?.isLoading, authState?.user?.email]);
 
   return (
     <div className="h-full flex flex-col">

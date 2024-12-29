@@ -1,17 +1,16 @@
 "use client";
 
 import { ResponseCodes } from "@/constants";
-import { auth } from "@/firebaseConfig";
 import { ProductType, UserType } from "@/types";
 import { useEffect, useState } from "react";
-import { useAuthState } from "react-firebase-hooks/auth";
 import ListItem from "../../widgets/ListItem";
 import Header from "../../widgets/Header";
+import useAuth from "@/hooks/useAuth";
 
 const Wishlist = () => {
   const [products, setProducts] = useState<ProductType[]>([]);
 
-  const [user, loading] = useAuthState(auth);
+  const { authState } = useAuth();
 
   const getWishListItems = async (email: string) => {
     const rawRes = await fetch(`/api/user?email=${email}`);
@@ -43,9 +42,9 @@ const Wishlist = () => {
   };
 
   useEffect(() => {
-    if (loading || !user || !user.email) return;
-    (async () => getWishListItems(user.email!))();
-  }, [loading, user?.email]);
+    if (authState?.isLoading || !authState?.user || !authState?.user?.email) return;
+    (async () => getWishListItems(authState?.user?.email!))();
+  }, [authState?.isLoading, authState?.user?.email]);
 
   return (
     <div className="h-full flex flex-col">

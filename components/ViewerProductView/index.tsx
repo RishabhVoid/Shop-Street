@@ -1,12 +1,12 @@
 "use client";
 
-import { storage } from "@/firebaseConfig";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ProductType } from "@/types";
-import { ref } from "firebase/storage";
 import { useDownloadURL } from "react-firebase-hooks/storage";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import useFileStorage from "@/hooks/useFileStorage";
+import { useEffect, useState } from "react";
 
 interface Props {
   product: ProductType;
@@ -14,15 +14,23 @@ interface Props {
 }
 
 const ViewerProductView = ({ product, willBeHorizontle = false }: Props) => {
-  const router = useRouter();
+  const [data, setData] = useState({ isLoading: false, url: "" });
 
-  const [downloadUrl, loading] = useDownloadURL(
-    ref(storage, `${product?._id}-main`)
-  );
+  const router = useRouter();
+  const fileUploader = useFileStorage();
 
   const goToItem = () => {
     router.push(`/search/${product._id}`);
   };
+
+  useEffect(() => {
+    setData(prev => ({ ...prev, isLoading: true }));
+    const fetchUrl = async () => {
+      let url = await fileUploader.getFile(product._id);
+      setData(prev => ({ ...prev, isLoading: false, url: url }));
+    };
+    fetchUrl();
+  }, []);
 
   if (loading)
     return (

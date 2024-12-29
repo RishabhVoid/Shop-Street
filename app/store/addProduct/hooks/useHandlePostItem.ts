@@ -1,11 +1,9 @@
 import { useToast } from "@/components/ui/use-toast";
 import { ProductViewProfiles, ResponseCodes } from "@/constants";
-import { auth, storage } from "@/firebaseConfig";
+import useAuth from "@/hooks/useAuth";
+import useFileStorage from "@/hooks/useFileStorage";
 import getFileExtension from "@/lib/getFileExtention";
-import { StorageReference, ref } from "firebase/storage";
 import { FormEvent, useRef, useState } from "react";
-import { useAuthState } from "react-firebase-hooks/auth";
-import { useUploadFile } from "react-firebase-hooks/storage";
 
 const useHandlePostItem = () => {
   const [categories, setCategories] = useState<string[]>([]);
@@ -25,8 +23,8 @@ const useHandlePostItem = () => {
   const descRef = useRef<HTMLTextAreaElement>(null);
 
   const { toast } = useToast();
-  const [user] = useAuthState(auth);
-  const [uploadFile] = useUploadFile();
+  const { authState } = useAuth();
+  const fileUploader = useFileStorage();
 
   const popUp = (title: string, description: string) => {
     toast({
@@ -123,10 +121,8 @@ const useHandlePostItem = () => {
     }
   };
 
-  const uploadImageToStorage = async (ref: StorageReference, file: File) => {
-    const result = await uploadFile(ref, file, {
-      contentType: "image/jpeg",
-    });
+  const uploadImageToStorage = async (id: string, file: File) => {
+    await fileUploader.uploadFile(id, file);
   };
 
   const postProduct = async (
@@ -178,8 +174,8 @@ const useHandlePostItem = () => {
         const currentFileExtention = getFileExtension(currentFile);
         if (!currentFileExtention) return;
         const productProfileImageName = `${productId}-${profile}`;
-        const imageRef = ref(storage, productProfileImageName);
-        uploadImageToStorage(imageRef, currentFile);
+        // const imageRef = ref(storage, productProfileImageName);
+        uploadImageToStorage(productProfileImageName, currentFile);
       });
       if (!pictureViewRef.current || !logsRef.current) return;
       if (window.innerWidth < 768) {
@@ -234,8 +230,8 @@ const useHandlePostItem = () => {
     const deliveryTime = deliveryTimeRef.current.value;
     const desc = descRef.current.value;
 
-    if (!user || !user.email) return;
-    const sellerEmail = user.email;
+    if (!authState?.user || !authState?.user?.email) return;
+    const sellerEmail = authState?.user?.email;
     const matchingCategories = categories;
 
     (async () =>

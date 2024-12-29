@@ -1,10 +1,9 @@
 "use client";
 
 import { ResponseCodes } from "@/constants";
-import { auth } from "@/firebaseConfig";
+import useAuth from "@/hooks/useAuth";
 import { UserType } from "@/types";
 import { useEffect, useState } from "react";
-import { useAuthState } from "react-firebase-hooks/auth";
 
 interface Props {
   productId: string;
@@ -12,7 +11,7 @@ interface Props {
 }
 
 const AddToWishlist = ({ productId, styles }: Props) => {
-  const [user, loading] = useAuthState(auth);
+  const { authState } = useAuth();
   const [userData, setUserData] = useState<UserType>();
   const [isInWishlist, setIsInWishlist] = useState(false);
   const [isDis, setIsDis] = useState(true);
@@ -32,7 +31,7 @@ const AddToWishlist = ({ productId, styles }: Props) => {
 
   const toggleInCart = async () => {
     setIsDis(true);
-    if (!userData || !user || !user.email) return;
+    if (!userData || !authState?.user || !authState?.user?.email) return;
     let updatedUserData: string[] = [];
     if (userData.wishList.includes(productId)) {
       updatedUserData = userData.wishList.filter(
@@ -61,17 +60,17 @@ const AddToWishlist = ({ productId, styles }: Props) => {
     const jsonData = await rawRes.json();
 
     if (jsonData.status === ResponseCodes.SUCCESS) {
-      (async () => await checkIfItemInCart(user.email!, productId))();
+      (async () => await checkIfItemInCart(authState?.user?.email!, productId))();
     }
     setIsDis(false);
   };
 
   useEffect(() => {
     setIsDis(true);
-    if (loading || !user || !user.email || !productId || !productId.trim())
+    if (authState?.isLoading || !authState?.user || !authState?.user?.email || !productId || !productId.trim())
       return;
-    (async () => await checkIfItemInCart(user.email!, productId))();
-  }, [loading, user?.email, productId]);
+    (async () => await checkIfItemInCart(authState?.user?.email!, productId))();
+  }, [authState?.isLoading, authState?.user?.email, productId]);
 
   return (
     <button

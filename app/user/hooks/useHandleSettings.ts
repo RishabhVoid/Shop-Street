@@ -1,11 +1,9 @@
 import { ResponseCodes } from "@/constants";
-import { auth } from "@/firebaseConfig";
+import useAuth from "@/hooks/useAuth";
 import isValidEmail from "@/lib/isValidEmail";
 import { OrderDetails, UserType } from "@/types";
-import { signOut } from "firebase/auth";
 import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
-import { useAuthState } from "react-firebase-hooks/auth";
 
 const useHandleSettings = () => {
   const [userData, setUserData] = useState<UserType>();
@@ -15,7 +13,7 @@ const useHandleSettings = () => {
 
   const router = useRouter();
 
-  const [user, loading] = useAuthState(auth);
+  const { authState, logOut } = useAuth();
 
   const getUser = async (email: string) => {
     const rawRes = await fetch(`/api/user?email=${email}`);
@@ -43,13 +41,13 @@ const useHandleSettings = () => {
       phoneNo: parseInt(phoneNo),
     };
 
-    if (userData === null || userData === undefined || !user || !user?.email)
+    if (userData === null || userData === undefined || !authState?.user || !authState?.user?.email)
       return;
 
     const rawRes = await fetch("/api/user", {
       method: "PATCH",
       body: JSON.stringify({
-        email: user?.email,
+        email: authState?.user?.email,
         wishList: userData.wishList,
         cart: userData.cart,
         orderDetailOptions: [...userData.orderDetailOptions, orderDetailPreset],
@@ -66,7 +64,7 @@ const useHandleSettings = () => {
       setAddress("");
       setEmail("");
       setPhoneNo("");
-      (async () => await getUser(user.email!))();
+      (async () => await getUser(authState?.user?.email!))();
     }
   };
 
@@ -74,11 +72,11 @@ const useHandleSettings = () => {
     if (userData === null || userData === undefined) return;
     const orderDetailPresets: OrderDetails[] =
       userData.orderDetailOptions.filter((detail) => detail._id !== id);
-    if (userData === null || !user || !user?.email) return;
+    if (userData === null || !authState?.user || !authState?.user?.email) return;
     const rawRes = await fetch("/api/user", {
       method: "PATCH",
       body: JSON.stringify({
-        email: user?.email,
+        email: authState?.user?.email,
         wishList: userData.wishList,
         cart: userData.cart,
         orderDetailOptions: orderDetailPresets,
@@ -95,7 +93,7 @@ const useHandleSettings = () => {
       setAddress("");
       setEmail("");
       setPhoneNo("");
-      (async () => await getUser(user.email!))();
+      (async () => await getUser(authState?.user?.email!))();
     }
   };
 
@@ -112,14 +110,14 @@ const useHandleSettings = () => {
   };
 
   const handleSignOut = () => {
-    signOut(auth);
+    logOut();
     router.replace("/");
   };
 
   useEffect(() => {
-    if (loading || !user || !user?.email) return;
-    (async () => await getUser(user.email!))();
-  }, [loading, user?.email]);
+    if (authState?.isLoading || !authState?.user || !authState?.user?.email) return;
+    (async () => await getUser(authState?.user?.email!))();
+  }, [authState?.isLoading, authState?.user?.email]);
 
   const userId = useMemo(() => {
     if (!userData) return "Loading...";
@@ -133,8 +131,8 @@ const useHandleSettings = () => {
   }, [userData?._id]);
 
   return {
-    loading,
-    user,
+    loading: authState.isLoading,
+    user: authState.user,
     userData,
     userId,
     handleSignOut,

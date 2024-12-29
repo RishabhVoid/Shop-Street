@@ -1,15 +1,14 @@
 import { useToast } from "@/components/ui/use-toast";
 import { ResponseCodes } from "@/constants";
-import { auth } from "@/firebaseConfig";
+import useAuth from "@/hooks/useAuth";
 import { OrderType, ProductType } from "@/types";
 import { useEffect, useState } from "react";
-import { useAuthState } from "react-firebase-hooks/auth";
 
 const useHandleOrders = () => {
   const [orders, setOrders] = useState<OrderType[]>([]);
   const [pageLoading, setPageLoading] = useState(false);
 
-  const [user, loading] = useAuthState(auth);
+  const { authState } = useAuth();
   const { toast } = useToast();
 
   const popUp = (title: string, description: string) => {
@@ -51,10 +50,10 @@ const useHandleOrders = () => {
   };
 
   useEffect(() => {
-    if (loading || !user || !user.email) return;
+    if (authState?.isLoading || !authState?.user || !authState?.user?.email) return;
     setPageLoading(true);
-    (async () => await getOrders(user.email!))();
-  }, [loading, user, user?.email]);
+    (async () => await getOrders(authState?.user?.email!))();
+  }, [authState?.isLoading, authState?.user, authState?.user?.email]);
 
   return {
     orders,

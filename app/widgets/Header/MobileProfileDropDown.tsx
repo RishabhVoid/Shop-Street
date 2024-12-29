@@ -12,15 +12,19 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import Link from "next/link";
-import { signOut } from "firebase/auth";
-import { useAuthState, useSignInWithGoogle } from "react-firebase-hooks/auth";
-import { auth } from "@/firebaseConfig";
+import useAuth from "@/hooks/useAuth";
+import { useRef } from "react";
+import { AuthFormHandler } from "./AuthForm";
 
 const MobileProfileDropDown = () => {
-  const [signInWithGoogle] = useSignInWithGoogle(auth);
-  const [user, loading] = useAuthState(auth);
-  const isLoading = loading;
-  const isSignedIn = typeof user?.email === "string";
+  const authFormRef = useRef<AuthFormHandler>(null);
+  const { authState, logOut } = useAuth();
+  const isLoading = authState?.isLoading;
+  const isSignedIn = typeof authState?.user?.email === "string";
+
+  const openAuthDialog = () => {
+    authFormRef.current?.openDialog("register");
+  };
 
   if (isLoading)
     return (
@@ -45,13 +49,13 @@ const MobileProfileDropDown = () => {
       </Link>
       <DropdownMenu>
         <DropdownMenuTrigger className="flex items-center justify-center outline-none">
-          {!isSignedIn ? (
+          {!isSignedIn || true ? (
             <RiAccountCircleFill
               style={{ color: "white", fontSize: 24, cursor: "pointer" }}
             />
           ) : (
             <img
-              src={user.photoURL || ""}
+              // src={authState?.user?. || ""}
               alt="user"
               className="w-[30px] rounded-full"
             />
@@ -59,13 +63,13 @@ const MobileProfileDropDown = () => {
         </DropdownMenuTrigger>
         <DropdownMenuContent className="bg-white mr-2 rounded-[5px]">
           <DropdownMenuLabel className="font-normal">
-            {isSignedIn ? user.displayName : "Not signed in"}
+            {isSignedIn ? authState?.user?.name : "Not signed in"}
           </DropdownMenuLabel>
           <DropdownMenuSeparator />
           {!isSignedIn && (
             <DropdownMenuItem
               className="rounded-[5px]"
-              onClick={() => signInWithGoogle()}
+              onClick={openAuthDialog}
             >
               Sign In
             </DropdownMenuItem>
@@ -90,7 +94,7 @@ const MobileProfileDropDown = () => {
             className={`rounded-[5px] ${
               !isSignedIn && "text-gray-300 pointer-events-none"
             }`}
-            onClick={() => signOut(auth)}
+            onClick={() => logOut()}
           >
             Sign out
           </DropdownMenuItem>

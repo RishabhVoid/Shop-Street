@@ -23,7 +23,7 @@ const App = async ({ searchParams }: Props) => {
   }
 
   const products = await getFrontPageProducts(skipAmount);
-  const lastChunkValid = products.reverse()[0].length >= 20;
+  const lastChunkValid = products?.reverse()?.[0]?.length >= 20;
 
   return (
     <main className="w-full h-full max_contain overflow-x-hidden overflow-y-auto no_pad_scroll">

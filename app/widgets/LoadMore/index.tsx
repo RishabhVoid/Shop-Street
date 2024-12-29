@@ -1,7 +1,6 @@
 "use client";
 
 import { ProductsSectionSize } from "@/constants";
-import { ProductType } from "@/types";
 import { useRouter } from "next/navigation";
 
 interface Props {

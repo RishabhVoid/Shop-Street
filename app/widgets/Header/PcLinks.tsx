@@ -1,16 +1,21 @@
 "use client";
 
-import { useAuthState, useSignInWithGoogle } from "react-firebase-hooks/auth";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { RiLoginCircleFill } from "react-icons/ri";
-import { auth } from "@/firebaseConfig";
 import PcSignedInLinks from "./PcSignedInLinks";
+import useAuth from "@/hooks/useAuth";
+import { useRef } from "react";
+import { AuthFormHandler } from "./AuthForm";
 
 const PcLinks = () => {
-  const [signInWithGoogle] = useSignInWithGoogle(auth);
-  const [user, loading] = useAuthState(auth);
-  const isLoading = loading;
-  const isSignedIn = typeof user?.email === "string";
+  const authFormRef = useRef<AuthFormHandler>(null);
+  const { authState } = useAuth();
+  const isLoading = authState?.isLoading;
+  const isSignedIn = typeof authState?.user?.email === "string";
+
+  const openAuthForm = () => {
+    authFormRef.current?.openDialog("register");
+  };
 
   if (isLoading)
     return (
@@ -33,7 +38,7 @@ const PcLinks = () => {
       {!isSignedIn ? (
         <div
           className="flex items-center group"
-          onClick={() => signInWithGoogle()}
+          onClick={openAuthForm}
         >
           <div className="flex items-center mr-2 justify-center">
             <RiLoginCircleFill
@@ -50,8 +55,8 @@ const PcLinks = () => {
         </div>
       ) : (
         <PcSignedInLinks
-          displayName={user?.displayName}
-          photoURL={user?.photoURL}
+          displayName={authState?.user?.name ?? "NULL"}
+          photoURL={""}
         />
       )}
     </div>
